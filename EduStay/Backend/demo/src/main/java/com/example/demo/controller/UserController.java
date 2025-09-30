@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -65,9 +66,16 @@ public class UserController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
+
+    // For checking whether the jwt is working or not
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         return new ResponseEntity<>(userservice.getAllUsers(),HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public void deleteAllUsers(){
+        userservice.deleteAllUsers();
     }
     
 }
