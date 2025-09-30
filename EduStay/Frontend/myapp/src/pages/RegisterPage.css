@@ -1,0 +1,72 @@
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register-page form {
+  background: #ffffff;
+  padding: 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  width: 100%;
+  max-width: 420px;
+}
+
+.register-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.register-page input {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 1.25rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.register-page input:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.register-page input::placeholder {
+  color: #6c757d;
+}
+
+.register-page button {
+  width: 100%;
+  padding: 14px;
+  background: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.register-page button:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.register-page button:active {
+  transform: translateY(0);
+}
