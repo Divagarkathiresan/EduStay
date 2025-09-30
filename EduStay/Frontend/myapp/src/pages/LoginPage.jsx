@@ -22,7 +22,7 @@ export default function LoginPage(){
                 setalertmsg("Login succeeded but no token returned");
             } else {
                 localStorage.setItem("token",token);
-                navigate("/");
+                navigate("/", { replace: true });
             }
         } catch (error) {
             setalertmsg(error.message || "Invalid credentials");
@@ -48,7 +48,9 @@ export default function LoginPage(){
                 required/>
                 <br/>
                 <button type="submit">Submit</button>
+                <p>Don't have an account?<a href="/register">Register</a></p>
                 {alertmsg && <p className="error">{alertmsg}</p>}
+
             </form>
 
         </div>

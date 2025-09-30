@@ -15,7 +15,7 @@ export const RegisterUser = async (userData)=>{
         console.log("error",error.message);
         throw error;
     }
-}
+};
 
 export const LoginUser = async (credentials) => {
   try {
@@ -38,3 +38,4 @@ export const LoginUser = async (credentials) => {
     throw error;
   }
 };
+

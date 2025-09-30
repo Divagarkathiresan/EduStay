@@ -1,10 +1,78 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Footer from "../components/footer/Footer";
+import "./HomePage.css";
 export default function HomePage(){
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        
+        if (token) {
+            // Validate token with backend
+            fetch('http://localhost:8080/api/auth/users', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Token is invalid or user doesn't exist
+                    localStorage.removeItem('token');
+                    navigate('/login', { replace: true });
+                    return;
+                }
+            })
+            .catch(() => {
+                // Network error or invalid token
+                localStorage.removeItem('token');
+                navigate('/login', { replace: true });
+            });
+            
+            // Set 30-minute timer only if user is logged in
+            const timer = setTimeout(() => {
+                localStorage.removeItem('token');
+                navigate('/login', { replace: true });
+            }, 30 * 60 * 1000);
+            
+            return () => clearTimeout(timer);
+        }
+    }, [navigate]);
+    
     return(
         <div className="home-page">
-            <h1>This is home page</h1>
-            <h1>Login : <a href="/login">Login</a></h1>
-            <h1>Register : <a href="/register">Register</a></h1>
+            <section className="hero-section">
+                <div className="hero-content">
+                    <h1>Find Your Perfect Student Accommodation</h1>
+                    <p>Discover comfortable, affordable, and safe housing options near your university</p>
+                    <div className="search-bar">
+                        <input type="text" placeholder="Enter city or university name" />
+                        <button>Search Properties</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section className="features-section">
+                <div className="container">
+                    <h2>Why Choose EduStay?</h2>
+                    <div className="features-grid">
+                        <div className="feature-card">
+                            <h3>Verified Properties</h3>
+                            <p>All properties are verified and inspected for quality and safety</p>
+                        </div>
+                        <div className="feature-card">
+                            <h3>Student-Friendly</h3>
+                            <p>Properties designed specifically for student needs and budgets</p>
+                        </div>
+                        <div className="feature-card">
+                            <h3>Easy Booking</h3>
+                            <p>Simple and secure online booking process with instant confirmation</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <Footer/>
         </div>
     )
 }

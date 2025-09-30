@@ -13,11 +13,11 @@ export default function RegisterPage(){
         e.preventDefault();
         try {
             const response=await RegisterUser({name,email,password});
-            navigate("/login");
+            console.log(response)
+            navigate("/login", { replace: true });
             alert("Registration successful! Please login.");
         } catch (error) {
             console.log("error",error.message);
-            throw new error;
         }
     }
     return(
@@ -43,6 +43,7 @@ export default function RegisterPage(){
                 onChange={(e)=>setpassword(e.target.value)}
                 required/>
                 <button type="submit">Submit</button>
+                <p>Already have an account?<a href="/login">Login</a></p>
             </form>
         </div>
     )
