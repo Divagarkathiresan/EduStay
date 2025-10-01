@@ -50,4 +50,8 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String getUsernameFromToken(String token) {
+        return extractUsername(token);
+    }
 }

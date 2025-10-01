@@ -7,12 +7,13 @@ export default function RegisterPage(){
     const[name,setname]=useState("");
     const[email,setemail]=useState("");
     const[password,setpassword]=useState("");
+    const[phone,setphone]=useState("");
     const navigate=useNavigate();
 
     const handleSubmit= async(e)=>{
         e.preventDefault();
         try {
-            const response=await RegisterUser({name,email,password});
+            const response=await RegisterUser({name,email,password,phone});
             console.log(response)
             navigate("/login", { replace: true });
             alert("Registration successful! Please login.");
@@ -36,6 +37,11 @@ export default function RegisterPage(){
                 onChange={(e)=>setemail(e.target.value)}
                 required 
                 placeholder="email"/>
+                <input 
+                type="tel" 
+                value={phone}
+                onChange={(e)=>setphone(e.target.value)}
+                placeholder="phone number"/>
                 <input 
                 type="password" 
                 placeholder="password" 

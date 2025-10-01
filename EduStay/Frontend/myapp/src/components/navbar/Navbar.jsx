@@ -30,7 +30,10 @@ export default function Navbar(){
             
             <div className="auth-buttons">
             {isLoggedIn ? (
-                <button onClick={handleLogout} className="logout-btn">Logout</button>
+                <>
+                    <Link to="/profile" className="profile-btn">Profile</Link>
+                    <button onClick={handleLogout} className="logout-btn">Logout</button>
+                </>
             ) : (
                 <>
                 <Link to="/login" className="login-btn">Login</Link>

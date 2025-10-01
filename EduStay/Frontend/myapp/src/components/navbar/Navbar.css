@@ -102,6 +102,21 @@
     background-color: #c0392b;
 }
 
+.navbar .profile-btn {
+    color: #f39c12;
+    border: 1px solid #f39c12;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.navbar .profile-btn:hover {
+    background-color: #f39c12;
+    color: white;
+}
+
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;

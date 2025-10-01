@@ -15,6 +15,8 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,12 +68,27 @@ public class UserController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-
     // For checking whether the jwt is working or not
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         return new ResponseEntity<>(userservice.getAllUsers(),HttpStatus.OK);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getCurrentUser(HttpServletRequest request){
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
+            String username = jwtUtil.getUsernameFromToken(token);
+            User user = userservice.getUserByName(username);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token"));
+    }
+
+
 
     @DeleteMapping
     public void deleteAllUsers(){
