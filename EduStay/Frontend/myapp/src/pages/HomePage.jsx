@@ -17,24 +17,19 @@ export default function HomePage(){
             })
             .then(response => {
                 if (!response.ok) {
-                    // Token is invalid or user doesn't exist
+                    // Token is invalid, remove it but don't redirect
                     localStorage.removeItem('token');
-                    navigate('/login', { replace: true });
-                    return;
                 }
             })
             .catch(() => {
-                // Network error or invalid token
+                // Network error or invalid token, remove it but don't redirect
                 localStorage.removeItem('token');
-                navigate('/login', { replace: true });
             });
-            
-            // Set 30-minute timer only if user is logged in
+            // Set 30-minute timer for auto-logout
             const timer = setTimeout(() => {
                 localStorage.removeItem('token');
-                navigate('/login', { replace: true });
+                alert('Session expired. Please login again.');
             }, 30 * 60 * 1000);
-            
             return () => clearTimeout(timer);
         }
     }, [navigate]);
@@ -51,7 +46,6 @@ export default function HomePage(){
                     </div>
                 </div>
             </section>
-            
             <section className="features-section">
                 <div className="container">
                     <h2>Why Choose EduStay?</h2>
@@ -71,7 +65,6 @@ export default function HomePage(){
                     </div>
                 </div>
             </section>
-            
             <Footer/>
         </div>
     )
