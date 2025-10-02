@@ -1,16 +1,28 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer/Footer";
+import Footer from "../../components/footer/Footer";
 import "./HomePage.css";
+
 export default function HomePage(){
+    const[location,setLocation]=useState("");
     const navigate = useNavigate();
+
+    const handleSubmit=async(e)=>{
+        e.preventDefault();
+        try {
+            navigate(`/properties/${location}`);
+        } catch (error) {
+            throw new Error("failed to fetch properties");
+        }
+    }
     
     useEffect(() => {
         const token = localStorage.getItem('token');
         
         if (token) {
             // Validate token with backend
-            fetch('http://localhost:8080/api/auth/users', {
+            const response = fetch('http://localhost:8080/api/auth/users', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -41,8 +53,13 @@ export default function HomePage(){
                     <h1>Find Your Perfect Student Accommodation</h1>
                     <p>Discover comfortable, affordable, and safe housing options near your university</p>
                     <div className="search-bar">
-                        <input type="text" placeholder="Enter city or university name" />
-                        <button>Search Properties</button>
+                        <input 
+                        type="text"
+                        value={location}
+                        required
+                        onChange={(e)=> setLocation(e.target.value)}
+                        placeholder="Enter city or university name" />
+                        <button onClick={handleSubmit}>Search Properties</button>
                     </div>
                 </div>
             </section>

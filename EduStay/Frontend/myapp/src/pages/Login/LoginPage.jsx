@@ -2,7 +2,7 @@ import React from "react";
 import "./LoginPage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginUser } from "../utils/api";
+import { LoginUser } from "../../utils/api";
 export default function LoginPage(){
     const[name,setname]=useState("");
     const[password,setpassword]=useState("");
