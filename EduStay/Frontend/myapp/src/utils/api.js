@@ -39,3 +39,14 @@ export const LoginUser = async (credentials) => {
   }
 };
 
+export const getAllUsers=async(token)=>{
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/users", {
+      method: "GET"});
+      if(!response.ok){
+        throw new Error("failed to fetch users");
+      }
+  } catch (error) {
+    throw new Error("failed to fetch users");
+  }
+}
