@@ -77,3 +77,31 @@ export const getPropertiesAsPerLocations=async(location)=>{
     throw new Error("failed to fetch properties");
   }
 }
+
+export const updateProfile = async (profileData) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    const response = await fetch('http://localhost:8080/api/auth/users/profile', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(profileData)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update profile');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error('Failed to update profile');
+  }
+}
+

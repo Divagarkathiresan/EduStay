@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { updateProfile } from "../../utils/api";
 import "./Profile.css";
 
 export default function Profile() {
     const [user, setUser] = useState({
         name: "",
         email: "",
-        phone: "",
-        university: "",
-        course: ""
+        phone: ""
     });
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -38,9 +37,7 @@ export default function Profile() {
                 setUser({
                     name: userData.name || "User",
                     email: userData.email || "user@example.com",
-                    phone: userData.phone || "",
-                    university: "University of Technology",
-                    course: "Computer Science"
+                    phone: userData.phone || ""
                 });
             } else {
                 localStorage.removeItem('token');
@@ -63,13 +60,23 @@ export default function Profile() {
     };
 
     const handleSave = async () => {
-        // For now, just simulate saving since backend doesn't have update endpoint
-        setIsEditing(false);
-        alert("Profile updated successfully!");
-        
-        // TODO: Implement actual backend update when endpoint is available
-        console.log('Profile data to save:', user);
+        try {
+            const profileData = {
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            };
+            
+            await updateProfile(profileData);
+            setIsEditing(false);
+            alert("Profile updated successfully!");
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert("Failed to update profile. Please try again.");
+        }
     };
+
+
 
     if (loading) {
         return (

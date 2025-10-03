@@ -12,7 +12,7 @@ import com.example.demo.repository.UserRepository;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         userRepository.save(user);
     }
     public List<User> getAllUsers() {
