@@ -27,9 +27,9 @@ public class PropertyController {
     private PropertyService propertyService;
 
     @PostMapping
-    public Property addProperty(@RequestBody Property property){
+    public Property addProperty(@RequestBody Property property) {
         return propertyService.addProperty(property);
-    }
+    }     
 
     @GetMapping("/{id}")
     public Property getPropertyById(@PathVariable long id){

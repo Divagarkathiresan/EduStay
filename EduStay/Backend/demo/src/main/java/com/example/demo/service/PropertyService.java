@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Property;
+import com.example.demo.model.User;
 import com.example.demo.repository.PropertyRepository;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     
-    public Property addProperty(Property property){
+    public Property addProperty(Property property) {
         return propertyRepository.save(property);
     }
     

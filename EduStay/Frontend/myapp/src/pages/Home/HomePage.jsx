@@ -6,12 +6,18 @@ import "./HomePage.css";
 
 export default function HomePage(){
     const[location,setLocation]=useState("");
+    const[minPrice,setMinPrice]=useState("");
+    const[maxPrice,setMaxPrice]=useState("");
     const navigate = useNavigate();
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
         try {
-            navigate(`/properties/${location}`);
+            const params = new URLSearchParams();
+            if(location) params.append('location', location);
+            if(minPrice) params.append('minPrice', minPrice);
+            if(maxPrice) params.append('maxPrice', maxPrice);
+            navigate(`/properties/${location}?${params.toString()}`);
         } catch (error) {
             throw new Error("failed to fetch properties");
         }
@@ -59,6 +65,16 @@ export default function HomePage(){
                         required
                         onChange={(e)=> setLocation(e.target.value)}
                         placeholder="Enter city or university name" />
+                        <input 
+                        type="number"
+                        value={minPrice}
+                        onChange={(e)=> setMinPrice(e.target.value)}
+                        placeholder="Min Price (₹)" />
+                        <input 
+                        type="number"
+                        value={maxPrice}
+                        onChange={(e)=> setMaxPrice(e.target.value)}
+                        placeholder="Max Price (₹)" />
                         <button onClick={handleSubmit}>Search Properties</button>
                     </div>
                 </div>

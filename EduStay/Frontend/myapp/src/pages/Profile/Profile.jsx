@@ -7,7 +7,8 @@ export default function Profile() {
     const [user, setUser] = useState({
         name: "",
         email: "",
-        phone: ""
+        phone: "",
+        role:""
     });
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -37,7 +38,8 @@ export default function Profile() {
                 setUser({
                     name: userData.name || "User",
                     email: userData.email || "user@example.com",
-                    phone: userData.phone || ""
+                    phone: userData.phone || "",
+                    role: userData.role || "Student"
                 });
             } else {
                 localStorage.removeItem('token');
@@ -137,6 +139,21 @@ export default function Profile() {
                                 />
                             ) : (
                                 <p>{user.phone || "Not provided"}</p>
+                            )}
+                        </div>
+                        <div className="form-group">
+                            <label>Role</label>
+                            {isEditing ? (
+                                <select
+                                    name="role"
+                                    value={user.role || "Student"}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="Student">Student</option>
+                                    <option value="Owner">Property Owner</option>
+                                </select>
+                            ) : (
+                                <p>{user.role || "Student"}</p>
                             )}
                         </div>
 

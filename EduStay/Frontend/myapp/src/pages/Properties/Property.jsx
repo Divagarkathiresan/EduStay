@@ -1,46 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { getPropertiesAsPerLocations } from "../../utils/api";
 import "./Property.css";
 
 export default function Property() {
     const { location } = useParams();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
+    const [filteredProperties, setFilteredProperties] = useState([]);
 
     useEffect(() => {
         (async () => {
             try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                navigate("/login");
-                return;
-            }
-            const response = await getPropertiesAsPerLocations(location);
-            setProperties(response);
+                const response = await getPropertiesAsPerLocations(location);
+                setProperties(response);
+                
+                const minPrice = searchParams.get('minPrice');
+                const maxPrice = searchParams.get('maxPrice');
+                
+                let filtered = response;
+                if (minPrice || maxPrice) {
+                    filtered = response.filter(property => {
+                        const rent = property.rent || 15000;
+                        const min = minPrice ? parseInt(minPrice) : 0;
+                        const max = maxPrice ? parseInt(maxPrice) : Infinity;
+                        return rent >= min && rent <= max;
+                    });
+                }
+                setFilteredProperties(filtered);
             } catch (error) {
-            console.error("Failed to fetch properties:", error);
+                console.error("Failed to fetch properties:", error);
             }
         })();
-    }, [location, navigate]);
+    }, [location, searchParams]);
     return (
         <div className="property-container">
             <div className="property-header">
                 <h1>Properties in {location}</h1>
-                <p>{properties.length} properties found</p>
+                <p>{filteredProperties.length} properties found</p>
                 <button onClick={() => navigate('/')} className="back-btn">Back to Search</button>
             </div>
 
             <div className="properties-section">
                 <div className="container">
-                    {properties.length === 0 ? (
+                    {filteredProperties.length === 0 ? (
                         <div className="no-properties">
                             <h3>No properties found in {location}</h3>
                             <p>Try searching for a different location</p>
                         </div>
                     ) : (
                         <div className="properties-grid">
-                            {properties.map((property, index) => (
+                            {filteredProperties.map((property, index) => (
                                 <div key={index} className="property-card">
                                     <h3>{property.name || `Property ${index + 1}`}</h3>
                                     <p><strong>Title:</strong> {property.title || location}</p>

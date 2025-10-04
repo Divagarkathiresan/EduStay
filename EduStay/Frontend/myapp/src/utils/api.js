@@ -55,26 +55,16 @@ export const getAllUsers=async(token)=>{
 
 export const getPropertiesAsPerLocations=async(location)=>{
   try {
-    const token = localStorage.getItem('token');
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-    
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    
-    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`, {
-      headers: headers
-    });
+    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`);
     
     if(!response.ok){
-      throw new Error("failed to fetch properties");
+      throw new Error(`Failed to fetch properties: ${response.status}`);
     }
     const data=await response.json();
     return data;
   } catch (error) {
-    throw new Error("failed to fetch properties");
+    console.error("Properties fetch error:", error);
+    throw error;
   }
 }
 
