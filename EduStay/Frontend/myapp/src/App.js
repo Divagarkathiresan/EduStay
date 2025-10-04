@@ -9,6 +9,7 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import Navbar from './components/navbar/Navbar';
 import Chatbot from './components/chatbot/Chatbot';
 import Property from './pages/Properties/Property';
+import AddProperty from './pages/AddProperty/AddProperty';
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/add-property" element={<AddProperty />} />
         <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Chatbot />

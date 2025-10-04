@@ -13,6 +13,12 @@ export default function Property() {
     useEffect(() => {
         (async () => {
             try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    navigate('/login');
+                    return;
+                }
+                
                 const response = await getPropertiesAsPerLocations(location);
                 setProperties(response);
                 
@@ -33,7 +39,7 @@ export default function Property() {
                 console.error("Failed to fetch properties:", error);
             }
         })();
-    }, [location, searchParams]);
+    }, [location, searchParams, navigate]);
     return (
         <div className="property-container">
             <div className="property-header">

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Property;
 import com.example.demo.service.PropertyService;
+import com.example.demo.utils.JwtUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +27,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PropertyController {
     @Autowired
     private PropertyService propertyService;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping
-    public Property addProperty(@RequestBody Property property) {
-        return propertyService.addProperty(property);
+    public Property addProperty(@RequestBody Property property, HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
+            String username = jwtUtil.getUsernameFromToken(token);
+            return propertyService.addProperty(property, username);
+        }
+        throw new RuntimeException("Invalid token");
     }     
 
     @GetMapping("/{id}")

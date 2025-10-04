@@ -111,6 +111,9 @@ public class UserController {
                 user.setName(updatedUser.getName());
                 user.setEmail(updatedUser.getEmail());
                 user.setPhone(updatedUser.getPhone());
+                if (updatedUser.getRole() != null) {
+                    user.setRole(updatedUser.getRole());
+                }
 
                 userservice.saveUser(user);
                 return ResponseEntity.ok(user);

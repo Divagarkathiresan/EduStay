@@ -66,7 +66,8 @@ export default function Profile() {
             const profileData = {
                 name: user.name,
                 email: user.email,
-                phone: user.phone
+                phone: user.phone,
+                role: user.role
             };
             
             await updateProfile(profileData);
@@ -150,12 +151,25 @@ export default function Profile() {
                                     onChange={handleInputChange}
                                 >
                                     <option value="Student">Student</option>
-                                    <option value="Owner">Property Owner</option>
+                                    <option value="houseOwner">House Owner</option>
+                                    <option value="workingProfessional">Working Professional</option>
                                 </select>
                             ) : (
                                 <p>{user.role || "Student"}</p>
                             )}
                         </div>
+                        
+                        {user.role === 'houseOwner' && (
+                            <div className="owner-actions">
+                                <button 
+                                    type="button" 
+                                    onClick={() => window.location.href = '/add-property'}
+                                    className="add-property-btn"
+                                >
+                                    Add New Property
+                                </button>
+                            </div>
+                        )}
 
                     </div>
 

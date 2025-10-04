@@ -55,7 +55,18 @@ export const getAllUsers=async(token)=>{
 
 export const getPropertiesAsPerLocations=async(location)=>{
   try {
-    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`);
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`, {
+      headers: headers
+    });
     
     if(!response.ok){
       throw new Error(`Failed to fetch properties: ${response.status}`);
@@ -92,6 +103,34 @@ export const updateProfile = async (profileData) => {
     return data;
   } catch (error) {
     throw new Error('Failed to update profile');
+  }
+}
+
+export const addProperty = async (propertyData) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    const response = await fetch('http://localhost:8080/edustay/properties', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(propertyData)
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || 'Failed to add property');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
   }
 }
 

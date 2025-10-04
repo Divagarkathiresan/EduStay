@@ -19,7 +19,15 @@ public class PropertyService {
     @Autowired
     private UserRepository userRepository;
     
-    public Property addProperty(Property property) {
+    public Property addProperty(Property property, String username) {
+        User user = userRepository.findByName(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        if (!"houseOwner".equalsIgnoreCase(user.getRole())) {
+            throw new RuntimeException("Only house owners can add properties");
+        }
+        property.setOwner(user);
         return propertyRepository.save(property);
     }
     
