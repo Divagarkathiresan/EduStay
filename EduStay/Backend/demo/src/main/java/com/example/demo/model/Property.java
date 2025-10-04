@@ -30,5 +30,6 @@ public class Property {
     private String location;
     private double rent;
     private String amenities;
+    private String imageUrls; // JSON array of image URLs
     private boolean verified = false;
 }

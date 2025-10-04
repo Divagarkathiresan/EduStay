@@ -3,6 +3,61 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { getPropertiesAsPerLocations } from "../../utils/api";
 import "./Property.css";
 
+const AuthenticatedImage = ({ src, alt }) => {
+    const [imageSrc, setImageSrc] = useState(null);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`http://localhost:8080${src}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    const blob = await response.blob();
+                    setImageSrc(URL.createObjectURL(blob));
+                } else {
+                    setError(true);
+                }
+            } catch (err) {
+                setError(true);
+            }
+        };
+        if (src) fetchImage();
+    }, [src]);
+
+    if (error) {
+        return <div className="no-image-placeholder"><span>Image Not Available</span></div>;
+    }
+
+    return imageSrc ? <img src={imageSrc} alt={alt} /> : <div>Loading...</div>;
+};
+
+const ImageGallery = ({ imageUrls, title }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const images = JSON.parse(imageUrls || '[]');
+
+    if (images.length === 0) {
+        return <div className="no-image-placeholder"><span>No Images Available</span></div>;
+    }
+
+    return (
+        <div className="image-gallery">
+            <AuthenticatedImage src={images[currentIndex]} alt={title} />
+            {images.length > 1 && (
+                <div className="image-nav">
+                    <button onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : images.length - 1)}>‹</button>
+                    <span>{currentIndex + 1} / {images.length}</span>
+                    <button onClick={() => setCurrentIndex(prev => prev < images.length - 1 ? prev + 1 : 0)}>›</button>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export default function Property() {
     const { location } = useParams();
     const [searchParams] = useSearchParams();
@@ -20,6 +75,7 @@ export default function Property() {
                 }
                 
                 const response = await getPropertiesAsPerLocations(location);
+                console.log('Properties response:', response);
                 setProperties(response);
                 
                 const minPrice = searchParams.get('minPrice');
@@ -59,15 +115,27 @@ export default function Property() {
                         <div className="properties-grid">
                             {filteredProperties.map((property, index) => (
                                 <div key={index} className="property-card">
-                                    <h3>{property.name || `Property ${index + 1}`}</h3>
-                                    <p><strong>Title:</strong> {property.title || location}</p>
-                                    <p><strong>Location:</strong> {property.location || location}</p>
-                                    <p><strong>Type:</strong> {property.type || 'Student Accommodation'}</p>
-                                    <p><strong>Price:</strong> ₹{property.rent || '15,000'}/month</p>
-                                    <p><strong>Description:</strong> {property.description || 'Comfortable student accommodation with all amenities'}</p>
-                                    <div className="property-actions">
-                                    <button className="view-btn">View Details</button>
-                                    <button className="contact-btn">Contact Owner</button>
+                                    <div className="property-images">
+                                        {property.imageUrls ? (
+                                            <ImageGallery imageUrls={property.imageUrls} title={property.title} />
+                                        ) : (
+                                            <div className="no-image-placeholder">
+                                                <span>No Image Available</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="property-content">
+                                        <h3>{property.title || `Property ${index + 1}`}</h3>
+                                        <p><strong>Location:</strong> {property.location || location}</p>
+                                        <p><strong>Price:</strong> ₹{property.rent || '15,000'}/month</p>
+                                        <p><strong>Description:</strong> {property.description || 'Comfortable student accommodation with all amenities'}</p>
+                                        {property.amenities && (
+                                            <p><strong>Amenities:</strong> {property.amenities}</p>
+                                        )}
+                                        <div className="property-actions">
+                                            <button className="view-btn">View Details</button>
+                                            <button className="contact-btn">Contact Owner</button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

@@ -11,6 +11,8 @@ export default function AddProperty() {
         rent: '',
         amenities: ''
     });
+    const [images, setImages] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]);
     const [loading, setLoading] = useState(false);
     const [userRole, setUserRole] = useState('');
     const navigate = useNavigate();
@@ -48,17 +50,54 @@ export default function AddProperty() {
         });
     };
 
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setImages(files);
+        
+        const previews = [];
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                previews.push(reader.result);
+                if (previews.length === files.length) {
+                    setImagePreviews(previews);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            await addProperty({
-                ...property,
-                rent: parseFloat(property.rent)
+            const formData = new FormData();
+            formData.append('title', property.title);
+            formData.append('description', property.description);
+            formData.append('location', property.location);
+            formData.append('rent', parseFloat(property.rent));
+            formData.append('amenities', property.amenities);
+            images.forEach(image => {
+                formData.append('images', image);
             });
-            alert('Property added successfully!');
-            navigate('/');
+
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:8080/edustay/properties', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('Property added successfully!');
+                navigate('/');
+            } else {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
         } catch (error) {
             alert(`Failed to add property: ${error.message}`);
         } finally {
@@ -128,6 +167,26 @@ export default function AddProperty() {
                             onChange={handleChange}
                             placeholder="WiFi, AC, Parking, etc."
                         />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label>Property Image</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handleImageChange}
+                            className="file-input"
+                        />
+                        {imagePreviews.length > 0 && (
+                            <div className="images-preview">
+                                {imagePreviews.map((preview, index) => (
+                                    <div key={index} className="image-preview">
+                                        <img src={preview} alt={`Preview ${index + 1}`} />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                     
                     <button type="submit" disabled={loading} className="submit-btn">

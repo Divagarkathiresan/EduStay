@@ -139,6 +139,39 @@
     gap: 1.5rem;
 }
 
+.file-input {
+    padding: 12px !important;
+    border: 2px dashed #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #f8f9fa !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input:hover {
+    border-color: #3498db !important;
+    background: #ffffff !important;
+}
+
+.images-preview {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.image-preview {
+    text-align: center;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 768px) {
     .add-property-page {
         padding: 1rem;

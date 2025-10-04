@@ -57,6 +57,9 @@ public class PropertyService {
             if(updatedProperty.getAmenities() != null){
                 property.setAmenities(updatedProperty.getAmenities());
             }
+            if(updatedProperty.getImageUrls() != null){
+                property.setImageUrls(updatedProperty.getImageUrls());
+            }
             if(updatedProperty.isVerified() != property.isVerified()){
                 property.setVerified(updatedProperty.isVerified());
             }

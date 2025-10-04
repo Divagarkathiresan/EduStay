@@ -56,16 +56,15 @@ export const getAllUsers=async(token)=>{
 export const getPropertiesAsPerLocations=async(location)=>{
   try {
     const token = localStorage.getItem('token');
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-    
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+    if (!token) {
+      throw new Error('Authentication required');
     }
     
     const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`, {
-      headers: headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     });
     
     if(!response.ok){
