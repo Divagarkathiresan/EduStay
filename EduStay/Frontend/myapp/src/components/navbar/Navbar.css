@@ -61,6 +61,7 @@
 }
 
 .navbar .auth-buttons a {
+    height: 30px;
     padding: 0.5rem 1.25rem;
     border-radius: 6px;
     text-decoration: none;
@@ -69,6 +70,7 @@
 }
 
 .navbar .login-btn {
+    text-align: center;
     color: #3498db;
     border: 1px solid #3498db;
 }
