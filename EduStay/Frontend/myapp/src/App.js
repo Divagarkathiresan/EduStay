@@ -13,7 +13,7 @@ import AddProperty from './pages/AddProperty/AddProperty';
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbar = ['/login', '/register','/none'].includes(location.pathname);
+  const hideNavbar = ['/login', '/register'].includes(location.pathname);
   
   return (
     <div className="App">
