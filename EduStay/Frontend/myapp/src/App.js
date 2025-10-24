@@ -10,6 +10,7 @@ import Navbar from './components/navbar/Navbar';
 import Chatbot from './components/chatbot/Chatbot';
 import Property from './pages/Properties/Property';
 import AddProperty from './pages/AddProperty/AddProperty';
+import HouseOwner from './pages/HouseOwnerAbout/HouseOwner';
 
 function AppContent() {
   const location = useLocation();
@@ -19,6 +20,8 @@ function AppContent() {
     <div className="App">
       {!hideNavbar && <Navbar />}
       <Routes>
+        <Route path="/contact-owner" element={<HouseOwner />} />
+        <Route path="/contact-owner/:id" element={<HouseOwner />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/properties/:location" element={<Property />} />
         <Route path="/login" element={<LoginPage />} />

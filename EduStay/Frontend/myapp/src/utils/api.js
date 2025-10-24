@@ -131,5 +131,30 @@ export const addProperty = async (propertyData) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const fetchOwner = async (id) =>{
+  try{
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+      const response = await fetch(`http://localhost:8080/edustay/properties/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch owner');
+      }
+      const data=await response.json();
+      return data;
+  }
+  catch(error){
+      console.error("Failed to fetch owner:", error);
+      throw error;
+  }
 }
 

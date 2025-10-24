@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { getPropertiesAsPerLocations } from "../../utils/api";
+import { Link } from "react-router-dom";
 import "./Property.css";
 
 const AuthenticatedImage = ({ src, alt }) => {
@@ -101,7 +102,6 @@ export default function Property() {
             <div className="property-header">
                 <h1>Properties in {location}</h1>
                 <p>{filteredProperties.length} properties found</p>
-                <button onClick={() => navigate('/')} className="back-btn">Back to Search</button>
             </div>
 
             <div className="properties-section">
@@ -134,7 +134,7 @@ export default function Property() {
                                         )}
                                         <div className="property-actions">
                                             <button className="view-btn">View Details</button>
-                                            <button className="contact-btn">Contact Owner</button>
+                                            <Link to={`/contact-owner/${property.ownerId || property.id}`}><button className="contact-btn">Contact Owner</button></Link>
                                         </div>
                                     </div>
                                 </div>

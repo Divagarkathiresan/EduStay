@@ -30,6 +30,7 @@
 
 .back-btn {
     padding: 1rem 2rem;
+    width: max-content;
     background: #3498db;
     color: #ffffff;
     border: none;
