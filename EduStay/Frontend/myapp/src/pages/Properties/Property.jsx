@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { getPropertiesAsPerLocations } from "../../utils/api";
+import { getPropertiesAsPerLocations, getAllProperties } from "../../utils/api";
 import { Link } from "react-router-dom";
 import "./Property.css";
 
@@ -75,22 +75,72 @@ export default function Property() {
                     return;
                 }
                 
-                const response = await getPropertiesAsPerLocations(location);
-                console.log('Properties response:', response);
+                // Use client-side filtering for flexible search
+                const allProperties = await getAllProperties();
+                console.log('All properties fetched:', allProperties);
+                
+                const searchTermLower = location.toLowerCase().trim();
+                console.log('Search term:', searchTermLower);
+                
+                const response = allProperties.filter(property => {
+                    const propertyLocation = (property.location || '').toLowerCase();
+                    const propertyTitle = (property.title || '').toLowerCase();
+                    const propertyDescription = (property.description || '').toLowerCase();
+                    
+                    // Handle pincode search (6 digits)
+                    const isPincode = /^\d{6}$/.test(searchTermLower);
+                    if (isPincode) {
+                        const matchesPincode = propertyLocation.includes(searchTermLower);
+                        console.log(`Pincode search: ${searchTermLower}, Property: ${property.title}, Location: ${propertyLocation}, Matches: ${matchesPincode}`);
+                        return matchesPincode;
+                    }
+                    
+                    // Regular text search
+                    const searchParts = searchTermLower.split(/[,\s-]+/).filter(part => part.length >= 2);
+                    
+                    const matchesSearch = searchParts.some(searchPart => 
+                        propertyLocation.includes(searchPart) ||
+                        propertyTitle.includes(searchPart) ||
+                        propertyDescription.includes(searchPart)
+                    ) || propertyLocation.includes(searchTermLower) ||
+                         propertyTitle.includes(searchTermLower);
+                    
+                    console.log(`Text search: ${searchTermLower}, Property: ${property.title}, Location: ${propertyLocation}, Matches: ${matchesSearch}`);
+                    return matchesSearch;
+                });
+                console.log('Filtered properties:', response);
                 setProperties(response);
                 
                 const minPrice = searchParams.get('minPrice');
                 const maxPrice = searchParams.get('maxPrice');
+                const propertyType = searchParams.get('propertyType');
+                
+                console.log('Search filters:', { minPrice, maxPrice, propertyType });
                 
                 let filtered = response;
+                
+                // Filter by price
                 if (minPrice || maxPrice) {
-                    filtered = response.filter(property => {
+                    filtered = filtered.filter(property => {
                         const rent = property.rent || 15000;
                         const min = minPrice ? parseInt(minPrice) : 0;
                         const max = maxPrice ? parseInt(maxPrice) : Infinity;
                         return rent >= min && rent <= max;
                     });
+                    console.log('After price filter:', filtered.length);
                 }
+                
+                // Filter by property type
+                if (propertyType) {
+                    console.log('Filtering by property type:', propertyType);
+                    filtered = filtered.filter(property => {
+                        const propType = property.propertyType || 'PG'; // Default to PG if not set
+                        console.log(`Property: ${property.title}, Type: ${propType}, Match: ${propType === propertyType}`);
+                        return propType === propertyType;
+                    });
+                    console.log('After property type filter:', filtered.length);
+                }
+                console.log('Final filtered properties:', filtered);
                 setFilteredProperties(filtered);
             } catch (error) {
                 console.error("Failed to fetch properties:", error);
@@ -127,14 +177,24 @@ export default function Property() {
                                     <div className="property-content">
                                         <h3>{property.title || `Property ${index + 1}`}</h3>
                                         <p><strong>Location:</strong> {property.location || location}</p>
+                                        <p><strong>Type:</strong> {property.propertyType || 'PG'}</p>
                                         <p><strong>Price:</strong> ₹{property.rent || '15,000'}/month</p>
                                         <p><strong>Description:</strong> {property.description || 'Comfortable student accommodation with all amenities'}</p>
                                         {property.amenities && (
                                             <p><strong>Amenities:</strong> {property.amenities}</p>
                                         )}
                                         <div className="property-actions">
-                                            <button className="view-btn">View Details</button>
-                                            <Link to={`/contact-owner/${property.ownerId || property.id}`}><button className="contact-btn">Contact Owner</button></Link>
+                                            <button 
+                                                className="view-btn"
+                                                onClick={() => {
+                                                    const phone = property.ownerPhone || property.owner.phone || '9876543210';
+                                                    const message = `Hi, I'm interested in your property: ${property.title} at ${property.location}`;
+                                                    window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(message)}`, '_blank');
+                                                }}
+                                            >
+                                                Contact Owner
+                                            </button>
+                                            <Link to={`/contact-owner/${property.ownerId || property.id}`}><button className="contact-btn">Owner Details</button></Link>
                                         </div>
                                     </div>
                                 </div>

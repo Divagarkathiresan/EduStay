@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addProperty } from '../../utils/api';
+import { validateProperty } from '../../utils/validation';
+import { showSuccess, showError, showWarning } from '../../utils/toast';
 import './AddProperty.css';
 
 export default function AddProperty() {
@@ -9,12 +11,14 @@ export default function AddProperty() {
         description: '',
         location: '',
         rent: '',
-        amenities: ''
+        amenities: '',
+        propertyType: 'PG'
     });
     const [images, setImages] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]);
     const [loading, setLoading] = useState(false);
     const [userRole, setUserRole] = useState('');
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,32 +48,74 @@ export default function AddProperty() {
     }, [navigate]);
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setProperty({
             ...property,
-            [e.target.name]: e.target.value
+            [name]: value
         });
+        
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors({
+                ...errors,
+                [name]: ''
+            });
+        }
     };
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setImages(files);
+        const totalImages = images.length + files.length;
         
-        const previews = [];
+        if (totalImages > 10) {
+            showWarning(`Maximum 10 images allowed. You can add ${10 - images.length} more images.`);
+            return;
+        }
+        
+        const newImages = [...images, ...files];
+        setImages(newImages);
+        
+        const newPreviews = [];
         files.forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                previews.push(reader.result);
-                if (previews.length === files.length) {
-                    setImagePreviews(previews);
+                newPreviews.push(reader.result);
+                if (newPreviews.length === files.length) {
+                    setImagePreviews([...imagePreviews, ...newPreviews]);
                 }
             };
             reader.readAsDataURL(file);
         });
+        
+        // Clear the input so same files can be selected again
+        e.target.value = '';
+    };
+
+    const removeImage = (index) => {
+        const newImages = images.filter((_, i) => i !== index);
+        const newPreviews = imagePreviews.filter((_, i) => i !== index);
+        setImages(newImages);
+        setImagePreviews(newPreviews);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validate form
+        const validationErrors = validateProperty(property);
+        
+        // Check if images are provided
+        if (images.length === 0) {
+            validationErrors.images = 'At least one image is required';
+        }
+        
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+        
         setLoading(true);
+        setErrors({});
 
         try {
             const formData = new FormData();
@@ -78,6 +124,7 @@ export default function AddProperty() {
             formData.append('location', property.location);
             formData.append('rent', parseFloat(property.rent));
             formData.append('amenities', property.amenities);
+            formData.append('propertyType', property.propertyType);
             images.forEach(image => {
                 formData.append('images', image);
             });
@@ -92,14 +139,14 @@ export default function AddProperty() {
             });
 
             if (response.ok) {
-                alert('Property added successfully!');
+                showSuccess('Property added successfully!');
                 navigate('/');
             } else {
                 const errorText = await response.text();
                 throw new Error(errorText);
             }
         } catch (error) {
-            alert(`Failed to add property: ${error.message}`);
+            showError(`Failed to add property: ${error.message}`);
         } finally {
             setLoading(false);
         }
@@ -121,8 +168,10 @@ export default function AddProperty() {
                             name="title"
                             value={property.title}
                             onChange={handleChange}
+                            className={errors.title ? 'error' : ''}
                             required
                         />
+                        {errors.title && <span className="error-message">{errors.title}</span>}
                     </div>
                     
                     <div className="form-group">
@@ -132,8 +181,11 @@ export default function AddProperty() {
                             name="location"
                             value={property.location}
                             onChange={handleChange}
+                            placeholder="Full address: Area, City, District, State, Pincode"
+                            className={errors.location ? 'error' : ''}
                             required
                         />
+                        {errors.location && <span className="error-message">{errors.location}</span>}
                     </div>
                     
                     <div className="form-group">
@@ -143,8 +195,12 @@ export default function AddProperty() {
                             name="rent"
                             value={property.rent}
                             onChange={handleChange}
+                            className={errors.rent ? 'error' : ''}
+                            min="1000"
+                            max="100000"
                             required
                         />
+                        {errors.rent && <span className="error-message">{errors.rent}</span>}
                     </div>
                     
                     <div className="form-group">
@@ -154,8 +210,10 @@ export default function AddProperty() {
                             value={property.description}
                             onChange={handleChange}
                             rows="4"
+                            className={errors.description ? 'error' : ''}
                             required
                         />
+                        {errors.description && <span className="error-message">{errors.description}</span>}
                     </div>
                     
                     <div className="form-group">
@@ -170,19 +228,41 @@ export default function AddProperty() {
                     </div>
                     
                     <div className="form-group">
-                        <label>Property Image</label>
+                        <label>Property Type</label>
+                        <select
+                            name="propertyType"
+                            value={property.propertyType}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="PG">PG (Paying Guest)</option>
+                            <option value="Home">Home/Apartment</option>
+                        </select>
+                    </div>
+                    
+                    <div className="form-group">
+                        <label>Property Images ({images.length}/10)</label>
                         <input
                             type="file"
                             accept="image/*"
                             multiple
                             onChange={handleImageChange}
                             className="file-input"
+                            disabled={images.length >= 10}
                         />
+                        {errors.images && <span className="error-message">{errors.images}</span>}
                         {imagePreviews.length > 0 && (
                             <div className="images-preview">
                                 {imagePreviews.map((preview, index) => (
                                     <div key={index} className="image-preview">
                                         <img src={preview} alt={`Preview ${index + 1}`} />
+                                        <button 
+                                            type="button" 
+                                            className="remove-image-btn"
+                                            onClick={() => removeImage(index)}
+                                        >
+                                            ×
+                                        </button>
                                     </div>
                                 ))}
                             </div>

@@ -158,18 +158,6 @@ export default function Profile() {
                                 <p>{user.role || "Student"}</p>
                             )}
                         </div>
-                        
-                        {user.role === 'houseOwner' && (
-                            <div className="owner-actions">
-                                <button 
-                                    type="button" 
-                                    onClick={() => window.location.href = '/add-property'}
-                                    className="add-property-btn"
-                                >
-                                    Add New Property
-                                </button>
-                            </div>
-                        )}
 
                     </div>
 
