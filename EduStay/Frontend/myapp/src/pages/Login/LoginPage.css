@@ -92,20 +92,6 @@
   text-decoration: underline;
 }
 
-.login-page input.error {
-  border-color: #e74c3c;
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
-}
-
-.error-message {
-  color: #e74c3c;
-  font-size: 0.875rem;
-  margin-top: -1rem;
-  margin-bottom: 1rem;
-  display: block;
-  font-weight: 500;
-}
-
 @media (max-width: 480px) {
   .login-page {
     padding: 1rem;

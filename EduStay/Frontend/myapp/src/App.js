@@ -10,7 +10,6 @@ import Navbar from './components/navbar/Navbar';
 import Chatbot from './components/chatbot/Chatbot';
 import Property from './pages/Properties/Property';
 import AddProperty from './pages/AddProperty/AddProperty';
-import PropertyManagement from './pages/PropertyManagement/PropertyManagement';
 import HouseOwner from './pages/HouseOwnerAbout/HouseOwner';
 
 function AppContent() {
@@ -30,7 +29,6 @@ function AppContent() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/add-property" element={<AddProperty />} />
-        <Route path="/manage-properties" element={<PropertyManagement />} />
         <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Chatbot />
