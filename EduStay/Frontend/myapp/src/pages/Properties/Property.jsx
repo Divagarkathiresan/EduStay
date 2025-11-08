@@ -66,6 +66,13 @@ export default function Property() {
     const [properties, setProperties] = useState([]);
     const [filteredProperties, setFilteredProperties] = useState([]);
 
+    const handleWhatsAppContact = (property) => {
+        const phoneNumber = property.ownerPhone || property.owner.phone || '1234567890';
+        const message = `Hi! I am interested in your property "${property.title || 'Property'}" in ${property.location || location}. The rent is ₹${property.rent || '15,000'}/month. Could you please provide more details?`;
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
     useEffect(() => {
         (async () => {
             try {
@@ -133,8 +140,8 @@ export default function Property() {
                                             <p><strong>Amenities:</strong> {property.amenities}</p>
                                         )}
                                         <div className="property-actions">
-                                            <button className="view-btn">View Details</button>
-                                            <Link to={`/contact-owner/${property.ownerId || property.id}`}><button className="contact-btn">Contact Owner</button></Link>
+                                            <button className="view-btn" onClick={() => handleWhatsAppContact(property)}>Contact Owner</button>
+                                            <Link to={`/contact-owner/${property.ownerId || property.id}`}><button className="contact-btn">Owner Details</button></Link>
                                         </div>
                                     </div>
                                 </div>

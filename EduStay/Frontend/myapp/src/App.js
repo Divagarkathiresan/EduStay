@@ -12,6 +12,7 @@ import Property from './pages/Properties/Property';
 import AddProperty from './pages/AddProperty/AddProperty';
 import HouseOwner from './pages/HouseOwnerAbout/HouseOwner';
 
+
 function AppContent() {
   const location = useLocation();
   const hideNavbar = ['/login', '/register'].includes(location.pathname);
@@ -29,6 +30,7 @@ function AppContent() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/add-property" element={<AddProperty />} />
+
         <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Chatbot />
@@ -38,7 +40,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AppContent />
     </Router>
   );

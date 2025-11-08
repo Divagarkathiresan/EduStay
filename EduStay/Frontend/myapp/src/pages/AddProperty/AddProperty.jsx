@@ -52,19 +52,20 @@ export default function AddProperty() {
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setImages(files);
+        setImages(prevImages => [...prevImages, ...files]);
         
-        const previews = [];
         files.forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                previews.push(reader.result);
-                if (previews.length === files.length) {
-                    setImagePreviews(previews);
-                }
+                setImagePreviews(prev => [...prev, reader.result]);
             };
             reader.readAsDataURL(file);
         });
+    };
+
+    const removeImage = (index) => {
+        setImages(prev => prev.filter((_, i) => i !== index));
+        setImagePreviews(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = async (e) => {
@@ -170,19 +171,28 @@ export default function AddProperty() {
                     </div>
                     
                     <div className="form-group">
-                        <label>Property Image</label>
+                        <label>Property Images</label>
                         <input
                             type="file"
                             accept="image/*"
                             multiple
                             onChange={handleImageChange}
                             className="file-input"
+                            key={images.length}
                         />
+                        <p className="file-help">Select multiple images (hold Ctrl/Cmd to select multiple files)</p>
                         {imagePreviews.length > 0 && (
                             <div className="images-preview">
                                 {imagePreviews.map((preview, index) => (
                                     <div key={index} className="image-preview">
                                         <img src={preview} alt={`Preview ${index + 1}`} />
+                                        <button 
+                                            type="button" 
+                                            onClick={() => removeImage(index)}
+                                            className="remove-image-btn"
+                                        >
+                                            ×
+                                        </button>
                                     </div>
                                 ))}
                             </div>

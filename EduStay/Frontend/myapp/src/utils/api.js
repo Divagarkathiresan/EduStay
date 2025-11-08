@@ -56,17 +56,11 @@ export const getAllUsers=async(token)=>{
 export const getPropertiesAsPerLocations=async(location)=>{
   try {
     const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('Authentication required');
-    }
-    
-    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${location}`, {
+    const response=await fetch(`http://localhost:8080/edustay/properties/search?location=${encodeURIComponent(location)}`, {
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     });
-    
     if(!response.ok){
       throw new Error(`Failed to fetch properties: ${response.status}`);
     }
@@ -77,6 +71,25 @@ export const getPropertiesAsPerLocations=async(location)=>{
     throw error;
   }
 }
+
+export const getAllProperties = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/edustay/properties', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch properties: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Properties fetch error:', error);
+    throw error;
+  }
+};
 
 export const updateProfile = async (profileData) => {
   try {
@@ -115,10 +128,9 @@ export const addProperty = async (propertyData) => {
     const response = await fetch('http://localhost:8080/edustay/properties', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(propertyData)
+      body: propertyData
     });
 
     if (!response.ok) {
@@ -136,25 +148,42 @@ export const addProperty = async (propertyData) => {
 export const fetchOwner = async (id) =>{
   try{
       const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
       const response = await fetch(`http://localhost:8080/edustay/properties/${id}`, {
-        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch owner');
+        throw new Error('Failed to fetch property');
       }
       const data=await response.json();
       return data;
   }
   catch(error){
-      console.error("Failed to fetch owner:", error);
+      console.error("Failed to fetch property:", error);
       throw error;
   }
 }
 
+
+
+
+
+
+
+export const api = {
+  login: LoginUser,
+  register: RegisterUser,
+  getAllProperties,
+  searchProperties: getPropertiesAsPerLocations,
+  getPropertyById: fetchOwner,
+  updateProfile,
+  getProfile: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/api/auth/users/profile', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response.json();
+  },
+
+};
