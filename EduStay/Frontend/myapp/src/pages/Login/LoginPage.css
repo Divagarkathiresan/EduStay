@@ -9,11 +9,11 @@
 }
 
 .login-page form {
-  background: #ffffff;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
   padding: 3rem;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e9ecef;
+  border: 1px solid #cce7ff;
   width: 100%;
   max-width: 420px;
 }

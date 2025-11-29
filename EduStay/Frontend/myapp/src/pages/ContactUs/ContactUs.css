@@ -3,7 +3,7 @@
     margin: 0 auto;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f7fafc;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     min-height: 100vh;
 }
 
@@ -58,7 +58,7 @@
 
 .contact-info h2, .contact-form h2 {
     font-size: 2rem;
-    color: #1a365d;
+    color: #2c3e50;
     margin-bottom: 32px;
     font-weight: 600;
     letter-spacing: -0.5px;
@@ -67,10 +67,10 @@
 .contact-item {
     margin-bottom: 32px;
     padding: 32px;
-    background: white;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border: 1px solid #f1f5f9;
+    border: 1px solid #cce7ff;
     transition: all 0.3s ease;
 }
 
@@ -81,7 +81,7 @@
 
 .contact-item h3 {
     font-size: 1.3rem;
-    color: #3182ce;
+    color: #3498db;
     margin-bottom: 12px;
     font-weight: 600;
     display: flex;
@@ -109,11 +109,11 @@
 }
 
 .contact-form {
-    background: white;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #f1f5f9;
+    border: 1px solid #cce7ff;
 }
 
 .form-group {
@@ -145,8 +145,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #3182ce;
-    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     transform: translateY(-1px);
 }
 
@@ -156,7 +156,7 @@
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
     color: white;
     padding: 18px 32px;
     border: none;
@@ -168,13 +168,13 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .submit-btn:hover {
-    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
+    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
 }
 
 .faq-section {
@@ -183,7 +183,7 @@
 
 .faq-section h2 {
     font-size: 2.5rem;
-    color: #1a365d;
+    color: #2c3e50;
     text-align: center;
     margin-bottom: 48px;
     font-weight: 600;
@@ -197,11 +197,11 @@
 }
 
 .faq-item {
-    background: white;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     padding: 32px;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border: 1px solid #f1f5f9;
+    border: 1px solid #cce7ff;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
 }
@@ -213,7 +213,7 @@
 
 .faq-item h4 {
     font-size: 1.3rem;
-    color: #3182ce;
+    color: #3498db;
     margin-bottom: 16px;
     font-weight: 600;
 }

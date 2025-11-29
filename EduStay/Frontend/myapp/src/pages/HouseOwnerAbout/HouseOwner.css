@@ -9,13 +9,13 @@
 }
 
 .owner-card {
-    background: #ffffff;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     border-radius: 15px;
     padding: 2.5rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     max-width: 600px;
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid #cce7ff;
 }
 
 .owner-card h1 {
