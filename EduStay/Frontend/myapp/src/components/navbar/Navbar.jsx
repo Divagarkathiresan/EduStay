@@ -21,10 +21,6 @@ export default function Navbar(){
     return(
         <div className="navbar">
             <Link to="/" className="logo">EduStay</Link>
-            
-            <ul className="nav-links">
-            </ul>
-            
             <div className="auth-buttons">
             {isLoggedIn ? (
                 <>
