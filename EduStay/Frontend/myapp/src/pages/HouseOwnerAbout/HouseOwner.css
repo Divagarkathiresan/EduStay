@@ -1,6 +1,6 @@
 .owner-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
     padding: 4rem 2rem;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@
 
 .owner-card h1 {
     text-align: center;
-    color: #2c3e50;
+    color: #1a365d;
     margin-bottom: 2rem;
     font-size: 2.5rem;
     font-weight: 600;
@@ -44,7 +44,7 @@
 
 .label {
     font-weight: 600;
-    color: #2c3e50;
+    color: #1a365d;
     font-size: 1rem;
 }
 
@@ -57,7 +57,7 @@
 .back-btn {
     width: 100%;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -65,12 +65,12 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
 }
 
 .back-btn:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
 }
 
 .loading, .error, .no-data {
@@ -81,12 +81,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .loading {
-    color: #ecf0f1;
+    color: #1a365d;
 }
 
 .error {
@@ -94,7 +94,7 @@
 }
 
 .no-data {
-    color: #bdc3c7;
+    color: #2c5282;
 }
 
 @media (max-width: 768px) {

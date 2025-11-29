@@ -1,155 +1,121 @@
+/* Navbar Main */
+/* Default navbar base */
 .navbar {
+    height: 70px;
+    padding: 0 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    padding: 1rem 2rem;
-    color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-.navbar .logo {
-    font-size: 1.5rem;
+/* Homepage box-shadow (softer) */
+.navbar-home {
+    box-shadow: 0px 4px 20px rgba(176, 224, 255, 0.3);
+}
+
+/* Other pages box-shadow (stronger) */
+.navbar-other {
+    box-shadow: 0px 4px 20px rgba(102, 178, 255, 0.4);
+}
+
+
+
+/* Logo */
+.logo {
+    font-size: 26px;
     font-weight: 700;
-    color: #3498db;
+    color: #1a365d;
     text-decoration: none;
-    letter-spacing: -0.5px;
 }
 
-.navbar .nav-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2rem;
-}
-
-.navbar .nav-links li {
-    margin: 0;
-}
-
-.navbar .nav-links a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-.navbar .nav-links a:hover {
-    background-color: #34495e;
-    color: #f39c12;
-}
-
-.navbar .nav-links a:visited {
-    color: #bdc3c7;
-}
-
-.navbar .nav-links a.active {
-    color: #e74c3c;
-    background-color: rgba(231, 76, 60, 0.1);
-}
-
-.navbar .auth-buttons {
+/* Profile Section */
+.profile-wrapper {
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
-
-.navbar .auth-buttons a {
-    display: flex;
-    align-items: center;
-    padding: 0.7rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.navbar .login-btn {
-    text-align: center;
-    color: #3498db;
-    border: 1px solid #3498db;
-}
-
-.navbar .login-btn:hover {
-    background-color: #3498db;
-    color: white;
-}
-
-.navbar .register-btn {
-    background-color: #3498db;
-    color: white;
-}
-
-.navbar .register-btn:hover {
-    background-color: #2980b9;
-}
-
-.navbar .logout-btn {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 10px;
+    position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
+}
+
+/* Circle avatar */
+.profile-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #b3d9ff;
     display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 18px;
 }
 
-.navbar .logout-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-1px);
-}
-
-.navbar .profile-btn {
-    color: #ecf0f1;
-    text-decoration: none;
+/* Name */
+.profile-name {
+    font-size: 16px;
     font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    color: #2c5282;
+}
+
+/* Arrow */
+.dropdown-arrow {
+    font-size: 14px;
+    opacity: 0.8;
+    color: #2c5282;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 150px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(255, 226, 226, 0.15);
+    border-radius: 8px;
+    padding: 10px 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    z-index: 100;
 }
 
-.navbar .profile-btn:hover {
-    background-color: #34495e;
-    color: #f39c12;
+/* Dropdown item */
+.dropdown-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    cursor: pointer;
 }
 
-.navbar .profile-btn:hover {
-    background-color: #3498db;
+.dropdown-item:hover {
+    background: #f2f2f2;
+}
+
+/* Logout button styling */
+.logout-btn {
+    text-align: left;
+    background: none;
+    border: none;
+    color: red;
+    width: 100%;
+    padding: 10px 15px;
+}
+
+.login-btn, .register-btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.login-btn {
+    border: 1px solid #3182ce;
+    color: #3182ce;
+    margin-right: 10px;
+}
+
+.register-btn {
+    background: #3182ce;
     color: white;
-    transform: translateY(-1px);
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        padding: 1rem;
-        flex-wrap: wrap;
-    }
-    
-    .navbar .nav-links {
-        gap: 1rem;
-    }
-    
-    .navbar .auth-buttons {
-        gap: 0.5rem;
-    }
-    
-    .navbar .auth-buttons a {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
 }

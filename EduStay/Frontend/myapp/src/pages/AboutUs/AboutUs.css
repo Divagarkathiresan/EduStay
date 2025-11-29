@@ -3,15 +3,15 @@
     margin: 0 auto;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
+    background: #f7fafc;
     min-height: 100vh;
 }
 
 .about-hero {
     text-align: center;
     padding: 80px 40px;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: #ecf0f1;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    color: #1a365d;
     border-radius: 15px;
     margin-bottom: 60px;
     position: relative;
@@ -33,14 +33,14 @@
     margin-bottom: 24px;
     font-weight: 700;
     letter-spacing: -0.5px;
-    color: #ecf0f1;
+    color: #1a365d;
     position: relative;
     z-index: 1;
 }
 
 .about-hero p {
     font-size: 1.2rem;
-    color: #bdc3c7;
+    color: #2c5282;
     max-width: 600px;
     margin: 0 auto;
     position: relative;
@@ -58,7 +58,7 @@
 
 .mission-section h2, .features-section h2, .stats-section h2, .users-section h2, .tech-section h2 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #1a365d;
     margin-bottom: 32px;
     text-align: center;
     font-weight: 600;
@@ -101,7 +101,7 @@
 .feature-card h3 {
     font-size: 1.5rem;
     margin-bottom: 16px;
-    color: #3498db;
+    color: #3182ce;
     font-weight: 600;
 }
 
@@ -147,7 +147,7 @@
 
 .stats-item {
     text-align: center;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
     color: white;
     padding: 48px 40px;
     border-radius: 15px;
@@ -212,7 +212,7 @@
 
 .user-card h4 {
     font-size: 1.4rem;
-    color: #3498db;
+    color: #3182ce;
     margin-bottom: 12px;
     font-weight: 600;
 }

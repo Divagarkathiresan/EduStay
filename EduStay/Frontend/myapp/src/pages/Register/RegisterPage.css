@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 2rem;
 }
@@ -23,7 +23,7 @@
 }
 
 .register-header h1 {
-    color: #2c3e50;
+    color: #1a365d;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
@@ -46,7 +46,7 @@
 
 .form-group label {
     display: block;
-    color: #2c3e50;
+    color: #1a365d;
     font-weight: 500;
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
@@ -67,8 +67,8 @@
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 .error-message {
@@ -84,7 +84,7 @@
 .register-btn {
     width: 100%;
     padding: 1rem;
-    background: #3498db;
+    background: #3182ce;
     color: white;
     border: none;
     border-radius: 6px;
@@ -96,7 +96,7 @@
 }
 
 .register-btn:hover:not(:disabled) {
-    background: #2980b9;
+    background: #2c5282;
     transform: translateY(-1px);
 }
 
@@ -117,7 +117,7 @@
 }
 
 .login-link a {
-    color: #3498db;
+    color: #3182ce;
     text-decoration: none;
     font-weight: 500;
 }

@@ -1,3 +1,4 @@
+//pages/Home/HomePage.jsx
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -68,11 +69,13 @@ export default function HomePage(){
                         <input 
                         type="number"
                         value={minPrice}
+                        required
                         onChange={(e)=> setMinPrice(e.target.value)}
                         placeholder="Min Price (₹)" />
                         <input 
                         type="number"
                         value={maxPrice}
+                        required
                         onChange={(e)=> setMaxPrice(e.target.value)}
                         placeholder="Max Price (₹)" />
                         <button onClick={handleSubmit}>Search Properties</button>

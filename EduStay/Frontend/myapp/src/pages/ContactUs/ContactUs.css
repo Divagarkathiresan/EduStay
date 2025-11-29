@@ -3,15 +3,15 @@
     margin: 0 auto;
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
+    background: #f7fafc;
     min-height: 100vh;
 }
 
 .contact-hero {
     text-align: center;
     padding: 80px 40px;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: #ecf0f1;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    color: #1a365d;
     border-radius: 15px;
     margin-bottom: 60px;
     position: relative;
@@ -34,14 +34,14 @@
     margin-bottom: 24px;
     font-weight: 700;
     letter-spacing: -0.5px;
-    color: #ecf0f1;
+    color: #1a365d;
     position: relative;
     z-index: 1;
 }
 
 .contact-hero p {
     font-size: 1.2rem;
-    color: #bdc3c7;
+    color: #2c5282;
     max-width: 600px;
     margin: 0 auto;
     position: relative;
@@ -58,7 +58,7 @@
 
 .contact-info h2, .contact-form h2 {
     font-size: 2rem;
-    color: #2c3e50;
+    color: #1a365d;
     margin-bottom: 32px;
     font-weight: 600;
     letter-spacing: -0.5px;
@@ -81,7 +81,7 @@
 
 .contact-item h3 {
     font-size: 1.3rem;
-    color: #3498db;
+    color: #3182ce;
     margin-bottom: 12px;
     font-weight: 600;
     display: flex;
@@ -145,8 +145,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
     transform: translateY(-1px);
 }
 
@@ -156,7 +156,7 @@
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
     color: white;
     padding: 18px 32px;
     border: none;
@@ -168,13 +168,13 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
 }
 
 .submit-btn:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
+    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
 }
 
 .faq-section {
@@ -183,7 +183,7 @@
 
 .faq-section h2 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: #1a365d;
     text-align: center;
     margin-bottom: 48px;
     font-weight: 600;
@@ -213,7 +213,7 @@
 
 .faq-item h4 {
     font-size: 1.3rem;
-    color: #3498db;
+    color: #3182ce;
     margin-bottom: 16px;
     font-weight: 600;
 }

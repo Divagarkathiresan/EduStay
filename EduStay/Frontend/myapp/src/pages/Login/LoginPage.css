@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
 }
@@ -21,7 +21,7 @@
 .login-page h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: #1a365d;
   font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.5px;
@@ -41,8 +41,8 @@
 
 .login-page input:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 .login-page input::placeholder {
@@ -52,7 +52,7 @@
 .login-page button {
   width: 100%;
   padding: 14px;
-  background: #3498db;
+  background: #3182ce;
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -65,7 +65,7 @@
 }
 
 .login-page button:hover {
-  background: #2980b9;
+  background: #2c5282;
   transform: translateY(-1px);
 }
 
@@ -81,14 +81,14 @@
 }
 
 .login-page p a {
-  color: #3498db;
+  color: #3182ce;
   text-decoration: none;
   font-weight: 500;
   margin-left: 0.5rem;
 }
 
 .login-page p a:hover {
-  color: #2980b9;
+  color: #2c5282;
   text-decoration: underline;
 }
 

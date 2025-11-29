@@ -1,3 +1,4 @@
+//pages/Profile/Profile.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../utils/api";
@@ -62,22 +63,30 @@ export default function Profile() {
     };
 
     const handleSave = async () => {
-        try {
-            const profileData = {
-                name: user.name,
-                email: user.email,
-                phone: user.phone,
-                role: user.role
-            };
-            
-            await updateProfile(profileData);
-            setIsEditing(false);
-            alert("Profile updated successfully!");
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            alert("Failed to update profile. Please try again.");
-        }
-    };
+    try {
+        const profileData = {
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            role: user.role
+        };
+
+        const updated = await updateProfile(profileData);
+
+        // Save updated name for Navbar
+        localStorage.setItem("name", updated.name);
+
+        alert("Profile updated successfully!");
+        setIsEditing(false);
+
+        // Go to HOME PAGE (not login)
+        navigate("/", { replace: true });
+
+    } catch (error) {
+        alert("Failed to update profile. Please try again.");
+    }
+};
+
 
 
 
@@ -144,19 +153,7 @@ export default function Profile() {
                         </div>
                         <div className="form-group">
                             <label>Role</label>
-                            {isEditing ? (
-                                <select
-                                    name="role"
-                                    value={user.role || "Student"}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="Student">Student</option>
-                                    <option value="houseOwner">House Owner</option>
-                                    <option value="workingProfessional">Working Professional</option>
-                                </select>
-                            ) : (
-                                <p>{user.role || "Student"}</p>
-                            )}
+                            <p>{user.role}</p>
                         </div>
                         
                         {user.role === 'houseOwner' && (

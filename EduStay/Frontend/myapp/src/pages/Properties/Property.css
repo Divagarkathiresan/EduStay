@@ -6,8 +6,8 @@
 }
 
 .property-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: #ecf0f1;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    color: #1a365d;
     padding: 6rem 2rem;
     text-align: center;
     flex: 1;
@@ -17,7 +17,7 @@
     font-size: 3rem;
     margin-bottom: 1rem;
     font-weight: 700;
-    color: #ecf0f1;
+    color: #1a365d;
     letter-spacing: -0.5px;
     text-transform: capitalize;
 }
@@ -25,14 +25,14 @@
 .property-header p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    color: #bdc3c7;
+    color: #2c5282;
     line-height: 1.6;
 }
 
 .back-btn {
     padding: 1rem 2rem;
     width: max-content;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -40,13 +40,13 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
     white-space: nowrap;
 }
 
 .back-btn:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
 }
 
 .loading, .error {
@@ -54,7 +54,7 @@
     padding: 4rem 2rem;
     font-size: 1.2rem;
     color: #7f8c8d;
-    background: #f8f9fa;
+    background: #f7fafc;
 }
 
 .error {
@@ -64,13 +64,13 @@
 .no-properties {
     text-align: center;
     padding: 4rem 2rem;
-    background: #f8f9fa;
+    background: #f7fafc;
     margin: 2rem;
     border-radius: 8px;
 }
 
 .no-properties h3 {
-    color: #2c3e50;
+    color: #1a365d;
     margin-bottom: 1rem;
     font-size: 2rem;
     font-weight: 600;
@@ -83,14 +83,14 @@
 
 .properties-section {
     padding: 4rem 2rem;
-    background: #f8f9fa;
+    background: #f7fafc;
 }
 
 .properties-section h2 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: #2c3e50;
+    color: #1a365d;
     font-weight: 600;
     letter-spacing: -0.5px;
 }
@@ -181,7 +181,7 @@
 }
 
 .property-content h3 {
-    color: #3498db;
+    color: #3182ce;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -195,7 +195,7 @@
 }
 
 .property-content p strong {
-    color: #2c3e50;
+    color: #1a365d;
 }
 
 .property-actions {
@@ -217,28 +217,28 @@
 }
 
 .view-btn {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
     color: #ffffff;
     border: none;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
 }
 
 .view-btn:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
 }
 
 .contact-btn {
     background: transparent;
-    color: #3498db;
-    border: 2px solid #3498db;
+    color: #3182ce;
+    border: 2px solid #3182ce;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .contact-btn:hover {
-    background: #3498db;
+    background: #3182ce;
     color: white;
-    box-shadow: 0 4px 20px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 4px 20px rgba(49, 130, 206, 0.2);
     transform: translateY(-2px);
 }
 

@@ -1,3 +1,4 @@
+//pages/Register/RegisterPage.jsx
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { RegisterUser } from "../../utils/api";
@@ -97,7 +98,6 @@ export default function RegisterPage() {
                         >
                             <option value="student">Student</option>
                             <option value="houseOwner">House Owner</option>
-                            <option value="workingProfessional">Working Professional</option>
                         </select>
                     </div>
                     
