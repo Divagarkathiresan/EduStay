@@ -3,13 +3,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 2rem;
 }
 
 .register-container {
-    background: #ffffff;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     padding: 3rem;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);

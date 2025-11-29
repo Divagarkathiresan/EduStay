@@ -3,17 +3,17 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
 }
 
 .login-page form {
-  background: #ffffff;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
   padding: 3rem;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e9ecef;
+  border: 1px solid #cce7ff;
   width: 100%;
   max-width: 420px;
 }
@@ -21,7 +21,7 @@
 .login-page h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: #1a365d;
   font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.5px;
