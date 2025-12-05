@@ -4,8 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -15,25 +13,27 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "MySuperSecretKeyForJWT1234567890"; // ≥256 bits
+    // Key must be ≥ 256 bits
+    private final String SECRET_KEY = "MySuperSecretKeyForJWT1234567890_MustBeLongEnough";
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
-    public String generateToken(String username) {
+    // We store email in the token
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)  // IMPORTANT: subject = email
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 min
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // 30 minutes
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractUsername(String token) {
-        return getClaims(token).getSubject();
+        return getClaims(token).getSubject(); // returns email
     }
 
-    public boolean validateToken(String token, String userDetails) {
+    public boolean validateToken(String token, String email) {
         try {
-            return extractUsername(token).equals(userDetails) && !isTokenExpired(token);
+            return extractUsername(token).equals(email) && !isTokenExpired(token);
         } catch (Exception e) {
             return false;
         }
@@ -51,6 +51,7 @@ public class JwtUtil {
                 .getBody();
     }
 
+    // alias
     public String getUsernameFromToken(String token) {
         return extractUsername(token);
     }

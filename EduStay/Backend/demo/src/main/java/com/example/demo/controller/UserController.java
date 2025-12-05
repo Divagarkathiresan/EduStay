@@ -54,8 +54,8 @@ public class UserController {
             if(user.getName().length() < 3 || !(user.getEmail().endsWith("@gmail.com"))){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Name must be at least 3 characters long & give valid email address"));
             }
-            if(userservice.getUserByName(user.getName()) != null){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Username already exists"));
+            if(userservice.getUserByEmail(user.getEmail()) != null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Email already exists"));
             }
             userservice.saveUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
@@ -67,18 +67,24 @@ public class UserController {
 
     
     @PostMapping("/login")
-    public ResponseEntity<?> LoginUser(@RequestBody User user){
-        if(user.getName().isEmpty() || user.getPassword().isEmpty()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","All fields are required"));
-        }
-        User dbuser = userservice.getUserByName(user.getName());
-        if(dbuser == null || !dbuser.getPassword().equals(user.getPassword())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Invalid Credentials"));
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+
+        if (user.getEmail() == null || user.getEmail().isEmpty() ||
+            user.getPassword() == null || user.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Email and password are required"));
         }
 
-        String token = jwtUtil.generateToken(dbuser.getName());
+        User dbUser = userservice.getUserByEmail(user.getEmail());
+        if (dbUser == null || !dbUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Invalid Credentials"));
+        }
+
+        String token = jwtUtil.generateToken(dbUser.getEmail()); 
         return ResponseEntity.ok(Map.of("token", token));
     }
+
 
     // For checking whether the jwt is working or not
     @GetMapping
@@ -91,8 +97,8 @@ public class UserController {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
-            String username = jwtUtil.getUsernameFromToken(token);
-            User user = userservice.getUserByName(username);
+            String email = jwtUtil.getUsernameFromToken(token);
+            User user = userservice.getUserByEmail(email);
             if (user != null) {
                 return ResponseEntity.ok(user);
             }
@@ -105,8 +111,8 @@ public class UserController {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
-            String username = jwtUtil.getUsernameFromToken(token);
-            User user = userservice.getUserByName(username);
+            String email = jwtUtil.getUsernameFromToken(token);
+            User user = userservice.getUserByEmail(email);
             if (user != null) {
                 user.setName(updatedUser.getName());
                 user.setEmail(updatedUser.getEmail());

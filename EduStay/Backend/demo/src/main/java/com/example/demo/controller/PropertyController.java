@@ -89,7 +89,6 @@ public class PropertyController {
             ObjectMapper mapper = new ObjectMapper();
             property.setImageUrls(mapper.writeValueAsString(imageUrls));
             Property savedProperty = propertyService.addProperty(property, email);
-            Property savedProperty = propertyService.addProperty(property, username);
             return ResponseEntity.ok(savedProperty);
             
         } catch (IOException e) {

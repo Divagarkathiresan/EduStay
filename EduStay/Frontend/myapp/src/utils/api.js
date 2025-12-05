@@ -26,12 +26,22 @@ export const LoginUser = async (credentials) => {
       body: JSON.stringify(credentials),
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.error || data.message || "Login failed");
+      if (response.status === 403) {
+        throw new Error("Access forbidden. Please check your credentials.");
+      }
+      
+      let errorMessage = "Login failed";
+      try {
+        const data = await response.json();
+        errorMessage = data.error || data.message || errorMessage;
+      } catch {
+        errorMessage = `Server error: ${response.status}`;
+      }
+      throw new Error(errorMessage);
     }
 
+    const data = await response.json();
     return data.token || null;
 
   } catch (error) {

@@ -153,3 +153,107 @@
         font-size: 0.9rem;
     }
 }
+.navbar .user-dropdown {
+    position: relative;
+}
+
+.navbar .user-button {
+    background: none;
+    border: none;
+    color: #1a365d;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.navbar .user-button:hover {
+    background-color: #b3d9ff;
+    color: #2c5282;
+}
+
+.navbar .dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.navbar .dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.navbar .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.navbar .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #1a365d;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #f7fafc;
+}
+
+.navbar .logout-item {
+    border-top: 1px solid #e2e8f0;
+    color: #e53e3e;
+}
+
+.navbar .logout-item:hover {
+    background-color: #fed7d7;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .navbar .nav-links {
+        gap: 1rem;
+    }
+    
+    .navbar .auth-buttons {
+        gap: 0.5rem;
+    }
+    
+    .navbar .auth-buttons a {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .navbar .user-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .navbar .dropdown-menu {
+        min-width: 130px;
+    }
+}
