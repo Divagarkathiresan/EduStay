@@ -58,6 +58,7 @@ public class PropertyController {
         try {
             String token = header.substring(7);
             String email = jwtUtil.getUsernameFromToken(token);
+            String username = jwtUtil.getUsernameFromToken(token);
             
             // Save images
             List<String> imageUrls = new ArrayList<>();
@@ -87,8 +88,8 @@ public class PropertyController {
             // Convert image URLs list to JSON string
             ObjectMapper mapper = new ObjectMapper();
             property.setImageUrls(mapper.writeValueAsString(imageUrls));
-            
             Property savedProperty = propertyService.addProperty(property, email);
+            Property savedProperty = propertyService.addProperty(property, username);
             return ResponseEntity.ok(savedProperty);
             
         } catch (IOException e) {
