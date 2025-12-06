@@ -181,7 +181,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For any queries or support, please reach out:
 
-- **Email**: support@edustay.com
 - **GitHub**: [EduStay Repository](https://github.com/Divagarkathiresan/EduStay.git)
 
 ---
