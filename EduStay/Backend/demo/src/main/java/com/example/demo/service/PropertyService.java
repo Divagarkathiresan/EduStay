@@ -13,66 +13,74 @@ import com.example.demo.repository.UserRepository;
 
 @Service
 public class PropertyService {
+
     @Autowired
     private PropertyRepository propertyRepository;
 
     @Autowired
     private UserRepository userRepository;
-    
-    public Property addProperty(Property property, String username) {
-        User user = userRepository.findByName(username);
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
+
+    public Property addProperty(Property property, String email) {
+
+        // FIXED: Find user by EMAIL (not name)
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Only house owners allowed
         if (!"houseOwner".equalsIgnoreCase(user.getRole())) {
             throw new RuntimeException("Only house owners can add properties");
         }
+
+        // Assign owner
         property.setOwner(user);
+
+        // Save property
         return propertyRepository.save(property);
     }
-    
-    public List<Property> getAllProperties(){
+
+    public List<Property> getAllProperties() {
         return propertyRepository.findAll();
     }
-    
-    public Optional<Property> getPropertyById(long id){
+
+    public Optional<Property> getPropertyById(long id) {
         return propertyRepository.findById(id);
     }
 
-    public Property updateProperty(long id, Property updatedProperty){
+    public Property updateProperty(long id, Property updatedProperty) {
         return propertyRepository.findById(id)
-        .map(property -> {
-            if(updatedProperty.getTitle() != null){
-                property.setTitle(updatedProperty.getTitle());    
-            }
-            if(updatedProperty.getDescription() != null){
-                property.setDescription(updatedProperty.getDescription());    
-            }
-            if(updatedProperty.getLocation() != null){
-                property.setLocation(updatedProperty.getLocation());
-            }
-            if(updatedProperty.getRent() != 0){
-                property.setRent(updatedProperty.getRent());
-            }
-            if(updatedProperty.getAmenities() != null){
-                property.setAmenities(updatedProperty.getAmenities());
-            }
-            if(updatedProperty.getImageUrls() != null){
-                property.setImageUrls(updatedProperty.getImageUrls());
-            }
-            if(updatedProperty.isVerified() != property.isVerified()){
-                property.setVerified(updatedProperty.isVerified());
-            }
-            return propertyRepository.save(property);
-        }).orElseThrow(() -> new RuntimeException("Property not found with id " + id));
+                .map(property -> {
+
+                    if (updatedProperty.getTitle() != null)
+                        property.setTitle(updatedProperty.getTitle());
+
+                    if (updatedProperty.getDescription() != null)
+                        property.setDescription(updatedProperty.getDescription());
+
+                    if (updatedProperty.getLocation() != null)
+                        property.setLocation(updatedProperty.getLocation());
+
+                    if (updatedProperty.getRent() != 0)
+                        property.setRent(updatedProperty.getRent());
+
+                    if (updatedProperty.getAmenities() != null)
+                        property.setAmenities(updatedProperty.getAmenities());
+
+                    if (updatedProperty.getImageUrls() != null)
+                        property.setImageUrls(updatedProperty.getImageUrls());
+
+                    if (updatedProperty.isVerified() != property.isVerified())
+                        property.setVerified(updatedProperty.isVerified());
+
+                    return propertyRepository.save(property);
+                })
+                .orElseThrow(() -> new RuntimeException("Property not found with id " + id));
     }
 
-    public void deleteProperty(long id){
+    public void deleteProperty(long id) {
         propertyRepository.deleteById(id);
     }
 
-    public List<Property> getPropertiesByLocation(String location){
+    public List<Property> getPropertiesByLocation(String location) {
         return propertyRepository.findByLocation(location);
     }
-
 }

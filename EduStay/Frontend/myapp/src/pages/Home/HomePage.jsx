@@ -28,8 +28,8 @@ export default function HomePage(){
         const token = localStorage.getItem('token');
         
         if (token) {
-            // Validate token with backend
-            const response = fetch('http://localhost:8080/api/auth/users', {
+            // Validate token with profile endpoint instead
+            fetch('http://localhost:8080/api/auth/users/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -44,12 +44,6 @@ export default function HomePage(){
                 // Network error or invalid token, remove it but don't redirect
                 localStorage.removeItem('token');
             });
-            // Set 30-minute timer for auto-logout
-            const timer = setTimeout(() => {
-                localStorage.removeItem('token');
-                alert('Session expired. Please login again.');
-            }, 30 * 60 * 1000);
-            return () => clearTimeout(timer);
         }
     }, [navigate]);
     

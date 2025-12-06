@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import { LoginUser } from "../../utils/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [alertmsg, setAlertmsg] = useState("");
     const navigate = useNavigate();
 
@@ -47,13 +49,23 @@ export default function LoginPage() {
                     placeholder="Email"
                 />
 
-                <input
-                    type="password"
-                    value={password}
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
+                {/* PASSWORD WITH EYE ICON */}
+                <div className="password-container">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                    />
+
+                    <span
+                        className="toggle-password"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                </div>
 
                 <button type="submit">Login</button>
 

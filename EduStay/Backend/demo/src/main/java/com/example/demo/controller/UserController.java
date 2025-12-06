@@ -6,10 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
@@ -17,124 +14,135 @@ import com.example.demo.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-
-
-
 @RestController
 @RequestMapping("/api/auth/users")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
+
     @Autowired
     private UserService userservice;
 
     @Autowired
     private JwtUtil jwtUtil;
 
+    // -----------------------------------------------------
+    // REGISTER USER
+    // -----------------------------------------------------
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user){
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         try {
-            if(user.getName().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","All fields are required"));
-            }
-            if(user.getName().length() < 3 || !(user.getEmail().endsWith("@gmail.com"))){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Name must be at least 3 characters long & give valid email address"));
-            }
-            if(userservice.getUserByEmail(user.getEmail()) != null){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error","Email already exists"));
-            }
-            userservice.saveUser(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
+            if (user.getName() == null || user.getName().trim().length() < 3)
+                return ResponseEntity.badRequest().body(Map.of("error", "Name must be at least 3 characters."));
+
+            if (user.getEmail() == null || !user.getEmail().contains("@"))
+                return ResponseEntity.badRequest().body(Map.of("error", "Please enter a valid email address."));
+
+            if (user.getPassword() == null || user.getPassword().length() < 8)
+                return ResponseEntity.badRequest().body(Map.of("error", "Password must be at least 8 characters."));
+
+            // Check if email exists
+            if (userservice.getUserByEmail(user.getEmail()).isPresent())
+                return ResponseEntity.badRequest().body(Map.of("error", "Email already exists."));
+
+            userservice.saveUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Registration failed."));
         }
     }
 
-    
+    // -----------------------------------------------------
+    // LOGIN USER
+    // -----------------------------------------------------
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
 
         if (user.getEmail() == null || user.getEmail().isEmpty() ||
             user.getPassword() == null || user.getPassword().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Email and password are required"));
+            return ResponseEntity.badRequest().body(Map.of("error", "Email and password are required."));
         }
 
-        User dbUser = userservice.getUserByEmail(user.getEmail());
-        if (dbUser == null || !dbUser.getPassword().equals(user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Invalid Credentials"));
-        }
+        var dbUserOpt = userservice.getUserByEmail(user.getEmail());
 
-        String token = jwtUtil.generateToken(dbUser.getEmail()); 
+        if (dbUserOpt.isEmpty())
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid email or password."));
+
+        User dbUser = dbUserOpt.get();
+
+        if (!dbUser.getPassword().equals(user.getPassword()))
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid email or password."));
+
+        String token = jwtUtil.generateToken(dbUser.getEmail());
+
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-
-    // For checking whether the jwt is working or not
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userservice.getAllUsers(),HttpStatus.OK);
-    }
-
+    // -----------------------------------------------------
+    // GET CURRENT USER
+    // -----------------------------------------------------
     @GetMapping("/profile")
-    public ResponseEntity<?> getCurrentUser(HttpServletRequest request){
+    public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+
         String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
+        if (header == null || !header.startsWith("Bearer "))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Token missing or invalid."));
+
+        try {
             String token = header.substring(7);
             String email = jwtUtil.getUsernameFromToken(token);
-            User user = userservice.getUserByEmail(email);
-            if (user != null) {
-                return ResponseEntity.ok(user);
-            }
+
+            var userOpt = userservice.getUserByEmail(email);
+
+            if (userOpt.isEmpty())
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token."));
+
+            return ResponseEntity.ok(userOpt.get());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid or expired token."));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token"));
     }
 
+    // -----------------------------------------------------
+    // UPDATE PROFILE
+    // -----------------------------------------------------
     @PutMapping("/profile")
-    public ResponseEntity<?> updateProfile(@RequestBody User updatedUser, HttpServletRequest request){
+    public ResponseEntity<?> updateProfile(@RequestBody User updatedUser, HttpServletRequest request) {
+
         String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            String email = jwtUtil.getUsernameFromToken(token);
-            User user = userservice.getUserByEmail(email);
-            if (user != null) {
-                user.setName(updatedUser.getName());
-                user.setEmail(updatedUser.getEmail());
-                user.setPhone(updatedUser.getPhone());
-                if (updatedUser.getRole() != null) {
-                    user.setRole(updatedUser.getRole());
-                }
+        if (header == null || !header.startsWith("Bearer "))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token"));
 
-                userservice.saveUser(user);
-                return ResponseEntity.ok(user);
-            }
+        String token = header.substring(7);
+        String email = jwtUtil.getUsernameFromToken(token);
+
+        var userOpt = userservice.getUserByEmail(email);
+        if (userOpt.isEmpty())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token"));
+
+        User user = userOpt.get();
+
+        // Update allowed fields
+        if (updatedUser.getName() != null) user.setName(updatedUser.getName());
+        if (updatedUser.getPhone() != null) user.setPhone(updatedUser.getPhone());
+        if (updatedUser.getRole() != null) user.setRole(updatedUser.getRole());
+
+        // Email cannot be changed (JWT depends on it)
+        if (updatedUser.getEmail() != null && !updatedUser.getEmail().equals(user.getEmail())) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Email cannot be changed after registration."));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid token"));
+
+        userservice.saveUser(user);
+
+        return ResponseEntity.ok(user);
     }
-
-
-
-
 
     @DeleteMapping
-    public void deleteAllUsers(){
+    public ResponseEntity<?> deleteAllUsers() {
         userservice.deleteAllUsers();
+        return ResponseEntity.ok("All users deleted.");
     }
-    
 }

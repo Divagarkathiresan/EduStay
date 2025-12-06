@@ -4,16 +4,17 @@ import com.example.demo.utils.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -23,20 +24,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors().and()                          // enable CORS (uses corsConfigurationSource bean)
-            .csrf().disable()                      // disable CSRF for stateless REST API
-            .authorizeHttpRequests(authorize -> authorize
-                // permit auth endpoints
-                .requestMatchers(HttpMethod.POST, "/api/auth/users/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/auth/users/register").permitAll()
-                // allow GET to root or swagger if needed
-                .requestMatchers(HttpMethod.GET, "/").permitAll()
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Place the JWT filter before username/password authentication filter
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(auth -> auth
+                        // PUBLIC ROUTES
+                        .requestMatchers("/api/auth/users/register", "/api/auth/users/login").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()  // DO THIS so images load
+                        .requestMatchers("/edustay/**").authenticated()
+                        .anyRequest().authenticated()
+
+                );
+
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -45,18 +48,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        // allow your frontend origin
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        // allow headers you use
-        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        // allow HTTP methods your app uses
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
-        // customize exposed headers if needed
-        config.setExposedHeaders(Arrays.asList("Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
+
         return source;
     }
 }

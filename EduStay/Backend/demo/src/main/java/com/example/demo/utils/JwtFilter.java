@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -32,31 +33,52 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        System.out.println("\n================ JWT FILTER CALLED ================");
+
         String header = request.getHeader("Authorization");
+        System.out.println("Authorization header = " + header);
 
         if (header != null && header.startsWith("Bearer ")) {
+
             String token = header.substring(7);
+            System.out.println("Extracted token = " + token);
+
             String email = null;
 
             try {
-                email = jwtUtil.extractUsername(token); // returns email
+                email = jwtUtil.getUsernameFromToken(token);
+                System.out.println("Extracted email from token = " + email);
             } catch (Exception e) {
-                email = null;
+                System.out.println("ERROR extracting email: " + e.getMessage());
             }
 
-            // Auth not already set
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                User user = userRepo.findByEmail(email); // IMPORTANT: find by EMAIL
+                var userOpt = userRepo.findByEmail(email);
+                User user = userOpt.orElse(null);
 
-                if (user != null && jwtUtil.validateToken(token, user.getEmail())) {
+                System.out.println("User found in DB = " + user);
+
+                boolean valid = jwtUtil.validateToken(token, email);
+                System.out.println("Is token valid? = " + valid);
+
+                if (user != null && valid) {
+                    System.out.println("Setting authentication in SecurityContext...");
 
                     UsernamePasswordAuthenticationToken auth =
-                            new UsernamePasswordAuthenticationToken(user, null, List.of());
+                            new UsernamePasswordAuthenticationToken(
+                                    user, null, List.of()
+                            );
 
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(auth);
+
+                } else {
+                    System.out.println("Token INVALID or user == null");
                 }
             }
+        } else {
+            System.out.println("Authorization header missing or NOT Bearer");
         }
 
         filterChain.doFilter(request, response);
