@@ -25,13 +25,12 @@ function AppContent() {
         <Route path="/contact-owner" element={<HouseOwner />} />
         <Route path="/contact-owner/:id" element={<HouseOwner />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/properties/:location" element={<Property />} />
+        <Route path="/properties/:district" element={<Property />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/add-property" element={<AddProperty />} />
-
         <Route path="/contact" element={<ContactUs />} />
       </Routes>
       <Chatbot />

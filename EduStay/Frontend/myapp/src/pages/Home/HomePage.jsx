@@ -1,81 +1,102 @@
-//pages/Home/HomePage.jsx
-import React, { useEffect } from "react";
-import { useState } from "react";
+// pages/Home/HomePage.jsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import "./HomePage.css";
 
-export default function HomePage(){
-    const[location,setLocation]=useState("");
-    const[minPrice,setMinPrice]=useState("");
-    const[maxPrice,setMaxPrice]=useState("");
+export default function HomePage() {
+    const [district, setDistrict] = useState(""); // district required for routing
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+    const [propertyType, setPropertyType] = useState("");
+
     const navigate = useNavigate();
 
-    const handleSubmit=async(e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const params = new URLSearchParams();
-            if(location) params.append('location', location);
-            if(minPrice) params.append('minPrice', minPrice);
-            if(maxPrice) params.append('maxPrice', maxPrice);
-            navigate(`/properties/${location}?${params.toString()}`);
-        } catch (error) {
-            throw new Error("failed to fetch properties");
+
+        // Because you asked to keep min/max required, ensure they exist before navigating
+        if (!district || minPrice === "" || maxPrice === "") {
+            alert("Please enter district, min price and max price before searching.");
+            return;
         }
-    }
-    
+
+        const params = new URLSearchParams();
+        params.append("district", district);
+        params.append("minPrice", minPrice);
+        params.append("maxPrice", maxPrice);
+        if (propertyType) params.append("type", propertyType);
+
+        // navigate to district search route
+        navigate(`/properties/${encodeURIComponent(district)}?${params.toString()}`);
+    };
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        
+        const token = localStorage.getItem("token");
         if (token) {
-            // Validate token with profile endpoint instead
-            fetch('http://localhost:8080/api/auth/users/profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+            fetch("http://localhost:8080/api/auth/users/profile", {
+                headers: { Authorization: `Bearer ${token}` },
             })
-            .then(response => {
-                if (!response.ok) {
-                    // Token is invalid, remove it but don't redirect
-                    localStorage.removeItem('token');
-                }
-            })
-            .catch(() => {
-                // Network error or invalid token, remove it but don't redirect
-                localStorage.removeItem('token');
-            });
+                .then((response) => {
+                    if (!response.ok) localStorage.removeItem("token");
+                })
+                .catch(() => localStorage.removeItem("token"));
         }
     }, [navigate]);
-    
-    return(
+
+    return (
         <div className="home-page">
             <section className="hero-section">
                 <div className="hero-content">
                     <h1>Find Your Perfect Student Accommodation</h1>
                     <p>Discover comfortable, affordable, and safe housing options near your university</p>
-                    <div className="search-bar">
-                        <input 
-                        type="text"
-                        value={location}
-                        required
-                        onChange={(e)=> setLocation(e.target.value)}
-                        placeholder="Enter city or university name" />
-                        <input 
-                        type="number"
-                        value={minPrice}
-                        required
-                        onChange={(e)=> setMinPrice(e.target.value)}
-                        placeholder="Min Price (₹)" />
-                        <input 
-                        type="number"
-                        value={maxPrice}
-                        required
-                        onChange={(e)=> setMaxPrice(e.target.value)}
-                        placeholder="Max Price (₹)" />
-                        <button onClick={handleSubmit}>Search Properties</button>
-                    </div>
+
+                    <form className="search-bar" onSubmit={handleSubmit}>
+                        {/* DISTRICT SEARCH */}
+                        <input
+                            type="text"
+                            value={district}
+                            required
+                            onChange={(e) => setDistrict(e.target.value)}
+                            placeholder="Enter district name"
+                        />
+
+                        {/* Min Price (required) */}
+                        <input
+                            type="number"
+                            value={minPrice}
+                            required
+                            onChange={(e) => setMinPrice(e.target.value)}
+                            placeholder="Min Price (₹)"
+                        />
+
+                        {/* Max Price (required) */}
+                        <input
+                            type="number"
+                            value={maxPrice}
+                            required
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                            placeholder="Max Price (₹)"
+                        />
+
+                        {/* Property Type */}
+                        <select
+                            value={propertyType}
+                            onChange={(e) => setPropertyType(e.target.value)}
+                            className="property-type-dropdown"
+                        >
+                            <option value="">All Types</option>
+                            <option value="PG">PG</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Home">Home</option>
+                        </select>
+
+                        {/* Search Button */}
+                        <button type="submit">Search Properties</button>
+                    </form>
                 </div>
             </section>
+
             <section className="features-section">
                 <div className="container">
                     <h2>Why Choose EduStay?</h2>
@@ -90,12 +111,13 @@ export default function HomePage(){
                         </div>
                         <div className="feature-card">
                             <h3>Easy Booking</h3>
-                            <p>Simple and secure online booking process with instant confirmation</p>
+                            <p>Simple and secure online booking with instant confirmation</p>
                         </div>
                     </div>
                 </div>
             </section>
-            <Footer/>
+
+            <Footer />
         </div>
-    )
+    );
 }

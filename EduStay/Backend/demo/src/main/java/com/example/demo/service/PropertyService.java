@@ -22,19 +22,14 @@ public class PropertyService {
 
     public Property addProperty(Property property, String email) {
 
-        // FIXED: Find user by EMAIL (not name)
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Only house owners allowed
         if (!"houseOwner".equalsIgnoreCase(user.getRole())) {
             throw new RuntimeException("Only house owners can add properties");
         }
 
-        // Assign owner
         property.setOwner(user);
-
-        // Save property
         return propertyRepository.save(property);
     }
 
@@ -56,8 +51,24 @@ public class PropertyService {
                     if (updatedProperty.getDescription() != null)
                         property.setDescription(updatedProperty.getDescription());
 
-                    if (updatedProperty.getLocation() != null)
-                        property.setLocation(updatedProperty.getLocation());
+                    // NEW: Property Type update
+                    if (updatedProperty.getPropertyType() != null)
+                        property.setPropertyType(updatedProperty.getPropertyType());
+
+                    if (updatedProperty.getAreaName() != null)
+                        property.setAreaName(updatedProperty.getAreaName());
+
+                    if (updatedProperty.getDistrict() != null)
+                        property.setDistrict(updatedProperty.getDistrict());
+
+                    if (updatedProperty.getState() != null)
+                        property.setState(updatedProperty.getState());
+
+                    if (updatedProperty.getPincode() != 0)
+                        property.setPincode(updatedProperty.getPincode());
+
+                    if (updatedProperty.getLocationDescription() != null)
+                        property.setLocationDescription(updatedProperty.getLocationDescription());
 
                     if (updatedProperty.getRent() != 0)
                         property.setRent(updatedProperty.getRent());
@@ -68,8 +79,7 @@ public class PropertyService {
                     if (updatedProperty.getImageUrls() != null)
                         property.setImageUrls(updatedProperty.getImageUrls());
 
-                    if (updatedProperty.isVerified() != property.isVerified())
-                        property.setVerified(updatedProperty.isVerified());
+                    property.setVerified(updatedProperty.isVerified());
 
                     return propertyRepository.save(property);
                 })
@@ -80,7 +90,13 @@ public class PropertyService {
         propertyRepository.deleteById(id);
     }
 
-    public List<Property> getPropertiesByLocation(String location) {
-        return propertyRepository.findByLocation(location);
+    // SEARCH BY AREA
+    public List<Property> getPropertiesByArea(String areaName) {
+        return propertyRepository.findByAreaName(areaName);
+    }
+
+    // NEW: SEARCH BY PROPERTY TYPE (PG, Apartment, Rental Home)
+    public List<Property> getPropertiesByType(String propertyType) {
+        return propertyRepository.findByPropertyType(propertyType);
     }
 }

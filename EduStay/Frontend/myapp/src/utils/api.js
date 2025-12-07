@@ -84,16 +84,25 @@ export const getAllUsers = async () => {
 // --------------------------
 // SEARCH PROPERTIES (NEEDS TOKEN)
 // --------------------------
-export const getPropertiesAsPerLocations = async (location) => {
+// utils/api.js
+// (keep your other exports as-is; replace or add this function)
+
+export const getPropertiesAsPerLocations = async (district, minPrice, maxPrice, type) => {
     try {
         const token = localStorage.getItem("token");
 
+        const params = new URLSearchParams();
+        if (district) params.append("district", district);
+        if (minPrice !== undefined && minPrice !== null) params.append("minPrice", minPrice);
+        if (maxPrice !== undefined && maxPrice !== null) params.append("maxPrice", maxPrice);
+        if (type) params.append("type", type);
+
         const response = await fetch(
-            `http://localhost:8080/edustay/properties/search?location=${location}`,
+            `http://localhost:8080/edustay/properties/search?${params.toString()}`,
             {
                 method: "GET",
                 headers: {
-                    "Authorization": `Bearer ${token}` // ONLY THIS
+                    "Authorization": `Bearer ${token}`
                 }
             }
         );
@@ -108,6 +117,8 @@ export const getPropertiesAsPerLocations = async (location) => {
         throw error;
     }
 };
+
+
 
 // --------------------------
 // GET ALL PROPERTIES (NEEDS TOKEN)

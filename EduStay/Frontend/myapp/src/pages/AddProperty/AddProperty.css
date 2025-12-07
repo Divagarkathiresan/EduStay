@@ -3,6 +3,7 @@
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     padding: 2rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
 }
 
 .add-property-page::before {
@@ -18,13 +19,14 @@
 }
 
 .add-property-container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
     background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid #cce7ff;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .add-property-container::before {
@@ -35,7 +37,7 @@
     right: 0;
     height: 6px;
     background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-    border-radius: 24px 24px 0 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .add-property-container h1 {
@@ -44,7 +46,6 @@
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: 600;
-    letter-spacing: -0.5px;
 }
 
 .property-form {
@@ -56,7 +57,6 @@
 .form-group {
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .form-group label {
@@ -64,73 +64,24 @@
     color: #1e293b;
     font-weight: 600;
     font-size: 1rem;
-    letter-spacing: -0.01em;
 }
 
 .form-group input,
 .form-group textarea {
-    padding: 18px 20px;
+    padding: 16px 18px;
     border: 2px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 14px;
     font-size: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-    transform: translateY(-2px);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-    font-family: inherit;
-}
-
-.form-group input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-.form-group input[type="number"]::-webkit-outer-spin-button,
-.form-group input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.submit-btn {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-}
-
-.submit-btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
-}
-
-.submit-btn:active {
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.15);
     transform: translateY(-1px);
-}
-
-.submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    background: #94a3b8;
 }
 
 .form-row {
@@ -139,105 +90,114 @@
     gap: 1.5rem;
 }
 
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
 .file-input {
     padding: 12px !important;
-    border: 2px dashed #e2e8f0 !important;
+    border: 2px dashed #cbd5e1 !important;
     border-radius: 12px !important;
-    background: #f8f9fa !important;
+    background: #f8fafc !important;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .file-input:hover {
     border-color: #3498db !important;
-    background: #ffffff !important;
+    background: white !important;
 }
 
 .images-preview {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 1rem;
 }
 
 .image-preview {
-    text-align: center;
-}
-
-.image-preview {
     position: relative;
-    text-align: center;
 }
 
 .image-preview img {
     width: 100%;
     height: 120px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .remove-image-btn {
     position: absolute;
     top: -8px;
     right: -8px;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: #ef4444;
     color: white;
+    font-size: 15px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     transition: all 0.2s ease;
 }
 
 .remove-image-btn:hover {
     background: #dc2626;
-    transform: scale(1.1);
+    transform: scale(1.12);
 }
 
 .file-help {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #64748b;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     font-style: italic;
 }
 
+.submit-btn {
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(52,152,219,0.35);
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.65;
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .add-property-page {
-        padding: 1rem;
-    }
-    
-    .add-property-container {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-    }
-    
-    .add-property-container h1 {
-        font-size: 2rem;
-    }
-    
     .form-row {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
-    
-    .property-form {
-        gap: 1.5rem;
+
+    .add-property-container {
+        padding: 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
     .add-property-container {
-        padding: 1.5rem 1rem;
+        padding: 1.3rem;
     }
-    
+
     .add-property-container h1 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
 }
