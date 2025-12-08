@@ -62,7 +62,7 @@ export default function HouseOwner() {
                     </div>
                     <div className="info-item">
                         <span className="label">Location:</span>
-                        <span className="value">{property.location || 'N/A'}</span>
+                        <span className="value">{`${property.areaName || 'N/A'}, ${property.district || 'N/A'}`}</span>
                     </div>
                 </div>
                 <button className="back-btn" onClick={() => navigate(-1)}>Back</button>

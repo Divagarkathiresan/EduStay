@@ -20,6 +20,9 @@ import com.example.demo.service.PropertyService;
 import com.example.demo.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/edustay/properties")
@@ -149,4 +152,18 @@ public class PropertyController {
     private String safe(String s) {
         return s == null ? "" : s.toLowerCase();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPropertyById(@PathVariable Long id) {
+        try {
+            var propertyOpt = propertyService.getPropertyById(id);
+            if (propertyOpt.isEmpty())
+                return ResponseEntity.status(404).body("Property not found");
+
+            return ResponseEntity.ok(propertyOpt.get());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
+    
 }

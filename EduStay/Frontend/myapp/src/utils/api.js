@@ -207,6 +207,7 @@ export const fetchOwner = async (id) => {
         const token = localStorage.getItem("token");
 
         const response = await fetch(`http://localhost:8080/edustay/properties/${id}`, {
+            method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
