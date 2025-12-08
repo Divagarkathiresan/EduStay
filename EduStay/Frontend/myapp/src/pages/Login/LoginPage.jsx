@@ -73,7 +73,13 @@ export default function LoginPage() {
                     Don't have an account? <a href="/register">Register</a>
                 </p>
 
-                {alertmsg && <p className="error">{alertmsg}</p>}
+                {alertmsg && (
+                    <div className="error-alert">
+                        <span className="error-icon">!</span>
+                        {alertmsg}
+                    </div>
+                )}
+
             </form>
         </div>
     );
