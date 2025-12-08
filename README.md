@@ -117,7 +117,7 @@ EduStay is a modern student accommodation platform that connects students with v
 EduStay/
 ├── Backend/
 │   └── demo/
-│       ├── controller/     # REST controllers
+│       ├── controller/     # REST controller
 │       ├── entity/         # JPA entities
 │       ├── repository/     # Database access layer
 │       ├── service/        # Business logic
