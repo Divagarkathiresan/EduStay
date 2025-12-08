@@ -71,12 +71,15 @@ EduStay is a modern student accommodation platform that connects students with v
 
 1. **Clone the Repository**
 
+   ```bash
    git clone https://github.com/Divagarkathiresan/EduStay.git
    cd edustay/Backend/demo
+   ```
 
 2. **Configure PostgreSQL Database**
    In `src/main/resources/application.properties`:
 
+   ```properties
    spring.datasource.url=jdbc:postgresql://localhost:5432/edustay
    spring.datasource.username=your_pg_username
    spring.datasource.password=your_pg_password
@@ -85,10 +88,13 @@ EduStay is a modern student accommodation platform that connects students with v
    spring.jpa.hibernate.ddl-auto=update
    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
    spring.jpa.show-sql=true
+   ```
 
 3. **Run the Backend**
 
+   ```bash
    mvn spring-boot:run
+   ```
 
    Backend runs on: **[http://localhost:8080](http://localhost:8080)**
 
@@ -98,15 +104,21 @@ EduStay is a modern student accommodation platform that connects students with v
 
 1. **Navigate to the frontend**
 
+   ```bash
    cd ../Frontend/myapp
+   ```
 
 2. **Install dependencies**
 
+   ```bash
    npm install
+   ```
 
 3. **Start development server**
 
+   ```bash
    npm start
+   ```
 
    Frontend runs on: **[http://localhost:3000](http://localhost:3000)**
 
@@ -114,10 +126,11 @@ EduStay is a modern student accommodation platform that connects students with v
 
 ## 📁 Project Structure
 
+```
 EduStay/
 ├── Backend/
 │   └── demo/
-│       ├── controller/     # REST controller
+│       ├── controller/     # REST controllers
 │       ├── entity/         # JPA entities
 │       ├── repository/     # Database access layer
 │       ├── service/        # Business logic
@@ -129,6 +142,9 @@ EduStay/
         ├── pages/          # Main pages
         ├── utils/          # API functions
         └── App.js
+```
+
+---
 
 ## 🔐 API Endpoints
 
@@ -190,8 +206,9 @@ EduStay/
 
 1. Run:
 
+   ```bash
    npm run build
-   
+   ```
 2. Deploy the generated **build/** folder to:
 
    * Render Static Site
@@ -227,3 +244,4 @@ Licensed under the **MIT License**.
 
 GitHub Repository:
 [https://github.com/Divagarkathiresan/EduStay](https://github.com/Divagarkathiresan/EduStay)
+
