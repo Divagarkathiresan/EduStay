@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     color: #1a365d;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: sticky;
@@ -11,6 +11,7 @@
     z-index: 1000;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     backdrop-filter: blur(10px);
+    height: 50px;
 }
 
 .navbar .logo {
@@ -24,9 +25,6 @@
 .navbar .nav-links {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2rem;
 }
 
 .navbar .nav-links li {
@@ -85,6 +83,7 @@
 }
 
 .navbar .register-btn {
+    margin-top: 20px;
     background-color: #3182ce;
     color: white;
 }

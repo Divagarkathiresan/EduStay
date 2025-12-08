@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -155,15 +156,11 @@ public class PropertyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPropertyById(@PathVariable Long id) {
-        try {
-            var propertyOpt = propertyService.getPropertyById(id);
-            if (propertyOpt.isEmpty())
-                return ResponseEntity.status(404).body("Property not found");
-
+        Optional<Property> propertyOpt = propertyService.getPropertyById(id);
+        if (propertyOpt.isPresent()) {
             return ResponseEntity.ok(propertyOpt.get());
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        } else {
+            return ResponseEntity.status(404).body("Property not found");
         }
     }
-    
 }

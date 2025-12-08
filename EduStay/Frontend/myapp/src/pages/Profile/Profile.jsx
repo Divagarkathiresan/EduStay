@@ -81,6 +81,7 @@ export default function Profile() {
 
         // Go to HOME PAGE (not login)
         navigate("/", { replace: true });
+        
 
     } catch (error) {
         alert("Failed to update profile. Please try again.");
