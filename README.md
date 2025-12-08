@@ -1,188 +1,229 @@
 # EduStay - Student Accommodation Platform
 
-A comprehensive web application for students to find and book accommodation near their universities. Built with React.js frontend and Spring Boot backend.
+A comprehensive web application for students to find and book accommodation near their universities. Built using **React.js (Frontend)**, **Spring Boot (Backend)**, and **PostgreSQL (Database)**. Deployed on **Render** for production-grade hosting.
+
+---
 
 ## 🏠 About EduStay
 
-EduStay is a modern student accommodation platform that connects students with verified property owners, making it easy to find safe, affordable, and convenient housing options near universities.
+EduStay is a modern student accommodation platform that connects students with verified property owners, enabling safe, affordable, and convenient housing choices near educational institutions.
+
+---
 
 ## ✨ Features
 
 ### For Students
-- 🔍 **Property Search** - Find accommodation by city or university
-- ✅ **Verified Properties** - All listings are verified for quality and safety
-- 💰 **Budget-Friendly Options** - Properties designed for student budgets
-- 📱 **Easy Booking** - Simple and secure online booking process
-- 🔐 **Secure Authentication** - JWT-based user authentication
+
+* 🔍 **Property Search** — Search by city, district, or university
+* 🏘️ **Verified Listings** — Only trusted and validated properties
+* 💰 **Budget-Friendly Options** — Tailored for student affordability
+* 📱 **Simple Booking Flow** — Seamless booking experience
+* 🔐 **Secure Authentication** — JWT-based login and role-based access
 
 ### For Property Owners
-- 📝 **List Properties** - Easy property listing management
-- 📊 **Owner Dashboard** - Track bookings and manage listings
-- 💼 **Marketing Tools** - Promote properties effectively
+
+* 📝 **Add & Manage Listings** — Intuitive property management
+* 📊 **Owner Dashboard** — Track property status & student interactions
+* 📈 **Property Insights** — Better visibility and marketing support
 
 ### Technical Features
-- 🔒 **JWT Authentication** - Secure user sessions with 30-minute token expiry
-- 📱 **Responsive Design** - Works seamlessly on all devices
-- 🎨 **Modern UI/UX** - Professional design with smooth animations
-- 🔄 **Auto-logout** - Automatic session management for security
+
+* 🔒 **JWT Authentication with 30-minute expiry**
+* 🔄 **Auto Logout** on token expiry
+* 📱 **Fully Responsive UI**
+* 🎨 **Modern & Clean Design**
+* 🚀 **Optimized API Architecture**
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React.js** - Modern JavaScript library for building user interfaces
-- **React Router** - Client-side routing
-- **CSS3** - Custom styling with modern design principles
-- **Fetch API** - HTTP client for API communication
+
+* React.js
+* React Router
+* CSS3
+* Fetch API
 
 ### Backend
-- **Spring Boot** - Java-based backend framework
-- **Spring Security** - Authentication and authorization
-- **Spring Data JPA** - Database abstraction layer
-- **MySQL** - Relational database
-- **JWT (JSON Web Tokens)** - Stateless authentication
-- **Maven** - Dependency management
+
+* Spring Boot
+* Spring Security
+* Spring Data JPA
+* PostgreSQL
+* JWT Authentication
+* Maven
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- Java 17 or higher
-- MySQL 8.0 or higher
-- Maven 3.6 or higher
 
-### Backend Setup
+* Node.js (v14+)
+* Java 17+
+* PostgreSQL 15+
+* Maven 3.6+
 
-1. **Clone the repository**
-   ```bash
+---
+
+## 🗄️ Backend Setup
+
+1. **Clone the Repository**
+
    git clone https://github.com/Divagarkathiresan/EduStay.git
    cd edustay/Backend/demo
-   ```
 
-2. **Configure Database**
-   ```properties
-   # src/main/resources/application.properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/edustay
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
+2. **Configure PostgreSQL Database**
+   In `src/main/resources/application.properties`:
+
+   spring.datasource.url=jdbc:postgresql://localhost:5432/edustay
+   spring.datasource.username=your_pg_username
+   spring.datasource.password=your_pg_password
+   spring.datasource.driver-class-name=org.postgresql.Driver
+
    spring.jpa.hibernate.ddl-auto=update
-   ```
+   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+   spring.jpa.show-sql=true
 
 3. **Run the Backend**
-   ```bash
+
    mvn spring-boot:run
-   ```
-   Backend will start on `http://localhost:8080`
 
-### Frontend Setup
+   Backend runs on: **[http://localhost:8080](http://localhost:8080)**
 
-1. **Navigate to Frontend**
-   ```bash
+---
+
+## 💻 Frontend Setup
+
+1. **Navigate to the frontend**
+
    cd ../Frontend/myapp
-   ```
 
-2. **Install Dependencies**
-   ```bash
+2. **Install dependencies**
+
    npm install
-   ```
 
-3. **Start Development Server**
-   ```bash
+3. **Start development server**
+
    npm start
-   ```
-   Frontend will start on `http://localhost:3000`
+
+   Frontend runs on: **[http://localhost:3000](http://localhost:3000)**
+
+---
 
 ## 📁 Project Structure
 
-```
 EduStay/
 ├── Backend/
 │   └── demo/
-│       ├── src/main/java/com/example/demo/
-│       │   ├── controller/     # REST API controllers
-│       │   ├── entity/         # JPA entities
-│       │   ├── repository/     # Data access layer
-│       │   ├── service/        # Business logic
-│       │   ├── config/         # Security configuration
-│       │   └── utils/          # JWT utilities
-│       └── pom.xml
+│       ├── controller/     # REST controllers
+│       ├── entity/         # JPA entities
+│       ├── repository/     # Database access layer
+│       ├── service/        # Business logic
+│       ├── config/         # Security, CORS, JWT configs
+│       └── utils/          # JWT utility classes
 └── Frontend/
     └── myapp/
-        ├── src/
-        │   ├── components/     # Reusable components
-        │   ├── pages/          # Page components
-        │   ├── utils/          # API utilities
-        │   └── App.js
-        └── package.json
-```
+        ├── components/     # Reusable components
+        ├── pages/          # Main pages
+        ├── utils/          # API functions
+        └── App.js
 
 ## 🔐 API Endpoints
 
 ### Authentication
-- `POST /api/auth/users/register` - User registration
-- `POST /api/auth/users/login` - User login
-- `GET /api/auth/users` - Get all users (protected)
 
-### Security Features
-- JWT token expiration: 30 minutes
-- Automatic logout on token expiry
-- Protected routes with authentication middleware
-- Secure password handling
+| Method | Endpoint                   | Description                     |
+| ------ | -------------------------- | ------------------------------- |
+| POST   | `/api/auth/users/register` | Register a new user             |
+| POST   | `/api/auth/users/login`    | Authenticate user and issue JWT |
+| GET    | `/api/auth/users`          | Get all users (protected)       |
 
-## 🎨 UI/UX Features
+### Security Highlights
 
-- **Modern Design** - Clean, professional interface
-- **Responsive Layout** - Mobile-first design approach
-- **Smooth Animations** - Hover effects and transitions
-- **Consistent Branding** - Unified color scheme and typography
-- **Accessibility** - WCAG compliant design elements
-
-## 🔒 Security Features
-
-- JWT-based stateless authentication
-- Automatic token validation
-- Session timeout management
-- Protected route navigation
-- Secure API communication
-- Input validation and sanitization
-
-## 🚀 Deployment
-
-### Backend Deployment
-```bash
-mvn clean package
-java -jar target/demo-0.0.1-SNAPSHOT.jar
-```
-
-### Frontend Deployment
-```bash
-npm run build
-# Deploy the build folder to your hosting service
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
-
-- **Frontend Development** - React.js, CSS3, Responsive Design
-- **Backend Development** - Spring Boot, MySQL, JWT Authentication
-- **UI/UX Design** - Modern, Professional Interface
-
-## 📞 Contact
-
-For any queries or support, please reach out:
-
-- **GitHub**: [EduStay Repository](https://github.com/Divagarkathiresan/EduStay.git)
+* JWT token expiration: **30 minutes**
+* Auto logout on expiry
+* Secure password hashing
+* Role-based secured endpoints
 
 ---
 
-⭐ **Star this repository if you find it helpful!**
+## 🌐 UI/UX Features
+
+* Clean and modern layout
+* Fully responsive (mobile, tablet, desktop)
+* Consistent theme and visual hierarchy
+* Smooth hover and transition animations
+* Accessibility-friendly design
+
+---
+
+## 🔒 Security Features
+
+* Stateless authentication
+* Secure API endpoints
+* Password hashing with BCrypt
+* Token validation filters
+* CORS configured for frontend communication
+
+---
+
+## 🚀 Deployment (Render)
+
+### Backend Deployment
+
+1. Create a **Render Web Service**
+2. Add environment variables:
+
+   * `DbUrl`
+   * `DbUserName`
+   * `DbPassword`
+3. Build & run with:
+
+   ```bash
+   mvn clean package
+   java -jar target/demo-0.0.1-SNAPSHOT.jar
+   ```
+
+### Frontend Deployment
+
+1. Run:
+
+   npm run build
+   
+2. Deploy the generated **build/** folder to:
+
+   * Render Static Site
+   * Vercel
+   * Netlify (optional)
+
+---
+
+## 🤝 Contributing
+
+1. Fork this repository
+2. Create your feature branch
+3. Commit and push changes
+4. Open a pull request
+
+---
+
+## 📝 License
+
+Licensed under the **MIT License**.
+
+---
+
+## 👥 Team
+
+* Frontend: React.js, CSS
+* Backend: Spring Boot, PostgreSQL
+* UI/UX: Modern User-Centric Design
+
+---
+
+## 📞 Contact
+
+GitHub Repository:
+[https://github.com/Divagarkathiresan/EduStay](https://github.com/Divagarkathiresan/EduStay)
