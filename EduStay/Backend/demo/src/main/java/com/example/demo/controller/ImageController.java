@@ -19,7 +19,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/uploads")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "https://edustay-frontend-xxxx.onrender.com"  // replace with your real URL
+})
 public class ImageController {
 
     @GetMapping("/{filename}")

@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -33,23 +34,35 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         // PUBLIC ROUTES
-                        .requestMatchers("/api/auth/users/register", "/api/auth/users/login").permitAll()
-                        .requestMatchers("/uploads/**").permitAll()  // DO THIS so images load
+                        .requestMatchers("/api/auth/users/register",
+                                         "/api/auth/users/login",
+                                         "/uploads/**").permitAll()
+
+                        // PRIVATE ROUTES
                         .requestMatchers("/edustay/**").authenticated()
                         .anyRequest().authenticated()
-
                 );
 
+        // JWT FILTER
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    // CORS CONFIGURATION
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",                      // Local React
+                "https://edustay-frontend-3ocr.onrender.com" // YOUR RENDER FRONTEND URL
+        ));
+
+        config.setAllowedMethods(Arrays.asList(
+                "GET", "POST", "PUT", "DELETE", "OPTIONS"
+        ));
+
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 

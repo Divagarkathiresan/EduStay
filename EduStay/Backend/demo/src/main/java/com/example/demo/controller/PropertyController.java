@@ -21,13 +21,14 @@ import com.example.demo.service.PropertyService;
 import com.example.demo.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
 @RequestMapping("/edustay/properties")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "https://edustay-frontend-xxxx.onrender.com"  // replace with your real URL
+})
 public class PropertyController {
 
     @Autowired
