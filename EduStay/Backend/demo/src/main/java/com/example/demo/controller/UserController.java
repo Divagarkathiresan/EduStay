@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api/auth/users")
 @CrossOrigin(origins = {
         "http://localhost:3000",
-        "https://edustay-frontend-xxxx.onrender.com"  // replace with your real URL
+        "https://edustay-frontend-56xj.onrender.com"  // replace with your real URL
 })
 public class UserController {
 
