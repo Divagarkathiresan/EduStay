@@ -56,7 +56,7 @@ public class SecurityConfig {
 
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",                      // Local React
-                "https://edustay-frontend-3ocr.onrender.com" // YOUR RENDER FRONTEND URL
+                "https://edustay-frontend-56xj.onrender.com" // YOUR RENDER FRONTEND URL
         ));
 
         config.setAllowedMethods(Arrays.asList(
