@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AddProperty.css';
+import { API_BASE_URL } from "../../config";
 
 export default function AddProperty() {
 
@@ -33,7 +34,7 @@ export default function AddProperty() {
             return;
         }
 
-        fetch('http://localhost:8080/api/auth/users/profile', {
+        fetch(`${API_BASE_URL}/api/auth/users/profile`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(res => res.json())
@@ -168,7 +169,7 @@ export default function AddProperty() {
 
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:8080/edustay/properties", {
+            const response = await fetch(`${API_BASE_URL}/edustay/properties`, {
                 method: "POST",
                 headers: { "Authorization": `Bearer ${token}` },
                 body: formData

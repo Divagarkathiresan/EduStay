@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import "./HomePage.css";
+import { API_BASE_URL } from "../../config";
 
 export default function HomePage() {
     const [district, setDistrict] = useState(""); // district required for routing
@@ -34,7 +35,7 @@ export default function HomePage() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            fetch("http://localhost:8080/api/auth/users/profile", {
+            fetch(`${API_BASE_URL}/api/auth/users/profile`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
                 .then((response) => {

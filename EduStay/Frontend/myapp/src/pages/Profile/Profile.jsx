@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "../../utils/api";
 import "./Profile.css";
+import { API_BASE_URL } from "../../config";
 
 export default function Profile() {
     const [user, setUser] = useState({
@@ -27,7 +28,7 @@ export default function Profile() {
 
     const fetchUserData = async (token) => {
         try {
-            const response = await fetch('http://localhost:8080/api/auth/users/profile', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/users/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

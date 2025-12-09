@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 
 export default function Navbar() {
     const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -13,20 +14,13 @@ export default function Navbar() {
         const checkAuthStatus = () => {
             const token = localStorage.getItem("token");
             setisLoggedIn(!!token);
-            
-            if (token) {
-                fetchUserName();
-            }
+
+            if (token) fetchUserName();
         };
-        
+
         checkAuthStatus();
-        
-        // Listen for storage changes (logout from other tabs)
-        window.addEventListener('storage', checkAuthStatus);
-        
-        return () => {
-            window.removeEventListener('storage', checkAuthStatus);
-        };
+        window.addEventListener("storage", checkAuthStatus);
+        return () => window.removeEventListener("storage", checkAuthStatus);
     }, []);
 
     useEffect(() => {
@@ -35,27 +29,27 @@ export default function Navbar() {
                 setOpen(false);
             }
         };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     const fetchUserName = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/api/auth/users/profile', {
-                headers: { 'Authorization': `Bearer ${token}` }
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(`${API_BASE_URL}/api/auth/users/profile`, {
+                headers: { Authorization: `Bearer ${token}` },
             });
-            
+
             if (response.ok) {
-                const userData = await response.json();
-                setUserName(userData.name || "User");
-            } else if (response.status === 401 || response.status === 403) {
-                // Token is invalid, logout
+                const data = await response.json();
+                setUserName(data.name || "User");
+            } else {
                 handleLogout();
             }
         } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error("User fetch failed", error);
             setUserName("User");
         }
     };
@@ -82,7 +76,7 @@ export default function Navbar() {
                             aria-expanded={open}
                         >
                             Hi, {userName}
-                            <span className={`dropdown-arrow ${open ? 'open' : ''}`}>▼</span>
+                            <span className={`dropdown-arrow ${open ? "open" : ""}`}>▼</span>
                         </button>
 
                         {open && (
