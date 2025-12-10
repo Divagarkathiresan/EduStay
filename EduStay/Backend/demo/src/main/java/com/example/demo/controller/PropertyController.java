@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.model.Property;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.PropertyService;
+import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +37,9 @@ public class PropertyController {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private UserService userservice;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -165,4 +171,15 @@ public class PropertyController {
             return ResponseEntity.status(404).body("Property not found");
         }
     }
+
+    @GetMapping("/owners/{id}")
+    public ResponseEntity<User> getOwner(@PathVariable Long id) {
+        Optional<User> owner =  userservice.getUserById(id);
+        if (owner.isPresent()) {
+            return new ResponseEntity<>(owner.get(), HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(404).body(null);   
+        }
+    }
+
 }

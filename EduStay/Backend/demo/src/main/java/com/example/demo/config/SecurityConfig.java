@@ -39,7 +39,7 @@ public class SecurityConfig {
                                          "/uploads/**").permitAll()
 
                         // PRIVATE ROUTES
-                        .requestMatchers("/edustay/**").authenticated()
+                        .requestMatchers("/edustay/**","/edustay/**/**").authenticated()
                         .anyRequest().authenticated()
                 );
 
