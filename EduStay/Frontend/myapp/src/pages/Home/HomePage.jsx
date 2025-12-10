@@ -89,7 +89,7 @@ export default function HomePage() {
                             <option value="">All Types</option>
                             <option value="PG">PG</option>
                             <option value="Apartment">Apartment</option>
-                            <option value="Home">Home</option>
+                            <option value="Rental Home">Rental Home</option>
                         </select>
 
                         {/* Search Button */}

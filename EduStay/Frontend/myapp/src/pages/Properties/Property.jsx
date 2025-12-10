@@ -202,7 +202,7 @@ export default function Property() {
                                                 Contact Owner
                                             </button>
 
-                                            <Link to={`/contact-owner/${property.owner.id}`}>
+                                            <Link to={`/contact-owner/${property.id}`}>
                                                 <button className="view-btn">Owner Details</button>
                                             </Link>
                                         </div>
