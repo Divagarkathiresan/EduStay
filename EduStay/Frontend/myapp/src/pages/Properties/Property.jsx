@@ -4,49 +4,28 @@ import { getPropertiesAsPerLocations } from "../../utils/api";
 import { API_BASE_URL } from "../../config";
 import "./Property.css";
 
-const AuthenticatedImage = ({ src, alt }) => {
-    const [imageSrc, setImageSrc] = useState(null);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const token = localStorage.getItem("token");
-
-                // FIX: Use API_BASE_URL instead of localhost
-                const response = await fetch(`${API_BASE_URL}${src}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-
-                if (response.ok) {
-                    const blob = await response.blob();
-                    setImageSrc(URL.createObjectURL(blob));
-                } else {
-                    setError(true);
-                }
-            } catch (err) {
-                setError(true);
-            }
-        };
-
-        if (src) fetchImage();
-    }, [src]);
-
-    if (error) {
+/* 
+===========================================
+ CloudImage Component (Cloudinary Compatible)
+===========================================
+*/
+const CloudImage = ({ src, alt }) => {
+    if (!src) {
         return (
             <div className="no-image-placeholder">
-                <span>Image Not Available</span>
+                <span>No Image Available</span>
             </div>
         );
     }
 
-    return imageSrc ? (
-        <img src={imageSrc} alt={alt} />
-    ) : (
-        <div>Loading...</div>
-    );
+    return <img src={src} alt={alt} />;
 };
 
+/* 
+===========================================
+ ImageGallery (uses Cloudinary URLs directly)
+===========================================
+*/
 const ImageGallery = ({ imageUrls, title }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -67,7 +46,8 @@ const ImageGallery = ({ imageUrls, title }) => {
 
     return (
         <div className="image-gallery">
-            <AuthenticatedImage src={images[currentIndex]} alt={title} />
+            {/* Display Cloudinary Image */}
+            <CloudImage src={images[currentIndex]} alt={title} />
 
             {images.length > 1 && (
                 <div className="image-nav">
@@ -180,6 +160,8 @@ export default function Property() {
                         <div className="properties-grid">
                             {filteredProperties.map((property, index) => (
                                 <div key={index} className="property-card">
+
+                                    {/* Image Gallery Section */}
                                     <div className="property-images">
                                         <ImageGallery
                                             imageUrls={property.imageUrls}
@@ -187,18 +169,24 @@ export default function Property() {
                                         />
                                     </div>
 
+                                    {/* Property Content Section */}
                                     <div className="property-content">
                                         <h3>{property.title}</h3>
                                         <p><strong>Type:</strong> {property.propertyType}</p>
                                         <p><strong>Location:</strong> {property.areaName}, {property.district}, {property.state} - {property.pincode}</p>
                                         <p><strong>Price:</strong> ₹{property.rent}/month</p>
                                         <p><strong>Description:</strong> {property.description}</p>
+
                                         {property.amenities && (
                                             <p><strong>Amenities:</strong> {property.amenities}</p>
                                         )}
 
+                                        {/* Action Buttons */}
                                         <div className="property-actions">
-                                            <button className="contact-btn" onClick={() => handleWhatsAppContact(property)}>
+                                            <button
+                                                className="contact-btn"
+                                                onClick={() => handleWhatsAppContact(property)}
+                                            >
                                                 Contact Owner
                                             </button>
 

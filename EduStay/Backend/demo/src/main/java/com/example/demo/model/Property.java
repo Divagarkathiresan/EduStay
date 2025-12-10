@@ -74,7 +74,6 @@ public class Property {
     @NotBlank(message = "Amenities cannot be empty")
     private String amenities;
 
-    @NotBlank(message = "At least one image URL is required")
     private String imageUrls;
 
     private boolean verified = false;

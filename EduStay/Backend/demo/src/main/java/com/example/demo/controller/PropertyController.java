@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.model.Property;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.ImageService;
 import com.example.demo.service.PropertyService;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtil;
@@ -37,6 +38,9 @@ public class PropertyController {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private ImageService imageService;
 
     @Autowired
     private UserService userservice;
@@ -61,11 +65,8 @@ public class PropertyController {
             HttpServletRequest request) {
 
         try {
-            // (validation omitted here for brevity — keep your validations)
             if (propertyType == null || propertyType.trim().isEmpty())
                 return ResponseEntity.badRequest().body("Please select a property type.");
-
-            // ... other checks as in your current code ...
 
             String header = request.getHeader("Authorization");
             if (header == null || !header.startsWith("Bearer "))
@@ -74,15 +75,13 @@ public class PropertyController {
             String token = header.substring(7);
             String email = jwtUtil.getUsernameFromToken(token);
 
+            // Upload images to Cloudinary
             List<String> imageUrls = new ArrayList<>();
-            Path uploadPath = Paths.get("uploads/");
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
 
             if (images != null) {
                 for (MultipartFile image : images) {
-                    String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-                    Files.copy(image.getInputStream(), uploadPath.resolve(fileName));
-                    imageUrls.add("/uploads/" + fileName);
+                    String cloudinaryUrl = imageService.uploadImage(image);
+                    imageUrls.add(cloudinaryUrl);
                 }
             }
 
@@ -99,15 +98,17 @@ public class PropertyController {
             property.setLocationDescription(locationDescription);
             property.setRent(rent);
             property.setAmenities(amenities);
-            property.setImageUrls(urlsJson);
+            property.setImageUrls(urlsJson);  // Store Cloudinary URLs in DB
 
             Property saved = propertyService.addProperty(property, email);
             return ResponseEntity.ok(saved);
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+
 
     // --- SEARCH endpoint ---
     @GetMapping("/search")

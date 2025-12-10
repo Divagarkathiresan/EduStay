@@ -8,7 +8,7 @@ export default function AddProperty() {
     const [property, setProperty] = useState({
         title: '',
         description: '',
-        propertyType: '',   // NEW FIELD
+        propertyType: '',
         areaName: '',
         district: '',
         state: '',
@@ -18,8 +18,8 @@ export default function AddProperty() {
         amenities: ''
     });
 
-    const [images, setImages] = useState([]);
-    const [imagePreviews, setImagePreviews] = useState([]);
+    const [images, setImages] = useState([]);              // REAL array of files
+    const [imagePreviews, setImagePreviews] = useState([]); // Base64 previews
     const [loading, setLoading] = useState(false);
     const [userRole, setUserRole] = useState('');
     const [error, setError] = useState('');
@@ -48,7 +48,7 @@ export default function AddProperty() {
         .catch(() => navigate('/login'));
     }, [navigate]);
 
-    // HANDLE INPUT CHANGES
+    // HANDLE TEXT INPUTS
     const handleChange = (e) => {
         setProperty(prev => ({
             ...prev,
@@ -56,27 +56,26 @@ export default function AddProperty() {
         }));
     };
 
-    // IMAGE UPLOAD HANDLER
+    // HANDLE IMAGE SELECTION
     const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
+        const selectedFiles = Array.from(e.target.files);
 
-        if (images.length + files.length > 5) {
+        if (images.length + selectedFiles.length > 5) {
             setError("You can upload up to 5 images.");
             return;
         }
 
         const validFiles = [];
-        for (let file of files) {
 
+        for (let file of selectedFiles) {
             if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
-                setError("Only JPG and PNG allowed.");
+                setError("Only JPG and PNG formats are allowed.");
                 return;
             }
             if (file.size > 5 * 1024 * 1024) {
-                setError("Each image must be below 5MB.");
+                setError("Each image must be smaller than 5MB.");
                 return;
             }
-
             validFiles.push(file);
         }
 
@@ -91,14 +90,14 @@ export default function AddProperty() {
         });
     };
 
+    // REMOVE IMAGE
     const removeImage = (index) => {
         setImages(prev => prev.filter((_, i) => i !== index));
         setImagePreviews(prev => prev.filter((_, i) => i !== index));
     };
 
-    // VALIDATION
+    // FORM VALIDATION
     const validateProperty = () => {
-
         if (!property.propertyType)
             return "Please select a property type.";
 
@@ -136,7 +135,7 @@ export default function AddProperty() {
         return null;
     };
 
-    // SUBMIT HANDLER
+    // HANDLE FORM SUBMISSION
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -151,27 +150,23 @@ export default function AddProperty() {
 
         try {
             const formData = new FormData();
-            formData.append("title", property.title);
-            formData.append("description", property.description);
 
-            formData.append("propertyType", property.propertyType);  // NEW
+            Object.entries(property).forEach(([key, value]) => {
+                formData.append(key, value);
+            });
 
-            formData.append("areaName", property.areaName);
-            formData.append("district", property.district);
-            formData.append("state", property.state);
-            formData.append("pincode", property.pincode);
-            formData.append("locationDescription", property.locationDescription);
-
-            formData.append("rent", parseFloat(property.rent));
-            formData.append("amenities", property.amenities);
-
-            images.forEach(file => formData.append("images", file));
+            // Append images correctly
+            for (let i = 0; i < images.length; i++) {
+                formData.append("images", images[i]);
+            }
 
             const token = localStorage.getItem("token");
 
             const response = await fetch(`${API_BASE_URL}/edustay/properties`, {
                 method: "POST",
-                headers: { "Authorization": `Bearer ${token}` },
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
                 body: formData
             });
 
@@ -192,7 +187,7 @@ export default function AddProperty() {
 
     if (userRole !== "houseOwner") return <div>Loading...</div>;
 
-    // RENDER UI
+    // UI MARKUP
     return (
         <div className="add-property-page">
             <div className="add-property-container">
@@ -206,7 +201,7 @@ export default function AddProperty() {
                     <div className="form-group">
                         <label>Property Type</label>
                         <select 
-                            name="propertyType" 
+                            name="propertyType"
                             value={property.propertyType}
                             onChange={handleChange}
                             className="dropdown-input"
@@ -218,34 +213,16 @@ export default function AddProperty() {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" value={property.title} onChange={handleChange} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Area Name</label>
-                        <input type="text" name="areaName" value={property.areaName} onChange={handleChange} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>District</label>
-                        <input type="text" name="district" value={property.district} onChange={handleChange} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>State</label>
-                        <input type="text" name="state" value={property.state} onChange={handleChange} />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Pincode</label>
-                        <input type="number" name="pincode" value={property.pincode} onChange={handleChange} />
-                    </div>
+                    {/* Inputs */}
+                    <div className="form-group"><label>Title</label><input type="text" name="title" value={property.title} onChange={handleChange} /></div>
+                    <div className="form-group"><label>Area Name</label><input type="text" name="areaName" value={property.areaName} onChange={handleChange} /></div>
+                    <div className="form-group"><label>District</label><input type="text" name="district" value={property.district} onChange={handleChange} /></div>
+                    <div className="form-group"><label>State</label><input type="text" name="state" value={property.state} onChange={handleChange} /></div>
+                    <div className="form-group"><label>Pincode</label><input type="number" name="pincode" value={property.pincode} onChange={handleChange} /></div>
 
                     <div className="form-group">
                         <label>Location Description</label>
-                        <textarea name="locationDescription" rows="2" value={property.locationDescription} onChange={handleChange} />
+                        <textarea name="locationDescription" rows="2" value={property.locationDescription} onChange={handleChange}></textarea>
                     </div>
 
                     <div className="form-group">
@@ -255,7 +232,7 @@ export default function AddProperty() {
 
                     <div className="form-group">
                         <label>Description</label>
-                        <textarea name="description" rows="4" value={property.description} onChange={handleChange} />
+                        <textarea name="description" rows="4" value={property.description} onChange={handleChange}></textarea>
                     </div>
 
                     <div className="form-group">
@@ -263,10 +240,11 @@ export default function AddProperty() {
                         <input type="text" name="amenities" value={property.amenities} onChange={handleChange} />
                     </div>
 
+                    {/* IMAGE UPLOAD */}
                     <div className="form-group">
                         <label>Property Images</label>
                         <input type="file" accept="image/*" multiple onChange={handleImageChange} />
-                        
+
                         <div className="images-preview">
                             {imagePreviews.map((preview, index) => (
                                 <div key={index} className="image-preview">
