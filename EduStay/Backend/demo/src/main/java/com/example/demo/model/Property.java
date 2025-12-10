@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -74,6 +75,7 @@ public class Property {
     @NotBlank(message = "Amenities cannot be empty")
     private String amenities;
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrls;
 
     private boolean verified = false;
