@@ -114,7 +114,7 @@ export default function RegisterPage() {
                                 required
                             />
                             <span
-                                className="toggle-password"
+                                className="toggle-password-1"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}

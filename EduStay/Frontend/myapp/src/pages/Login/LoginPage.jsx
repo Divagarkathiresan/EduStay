@@ -22,7 +22,7 @@ export default function LoginPage() {
 
         try {
             const token = await LoginUser({ email, password });
-            console.log("token", token);
+            console.log("User Logged in");
 
             if (!token) {
                 setAlertmsg("Login succeeded but no token returned");
@@ -49,7 +49,6 @@ export default function LoginPage() {
                     placeholder="Email"
                 />
 
-                {/* PASSWORD WITH EYE ICON */}
                 <div className="password-container">
                     <input
                         type={showPassword ? "text" : "password"}

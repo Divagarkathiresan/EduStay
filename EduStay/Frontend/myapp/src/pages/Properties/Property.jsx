@@ -198,12 +198,12 @@ export default function Property() {
                                         )}
 
                                         <div className="property-actions">
-                                            <button onClick={() => handleWhatsAppContact(property)}>
+                                            <button className="contact-btn" onClick={() => handleWhatsAppContact(property)}>
                                                 Contact Owner
                                             </button>
 
-                                            <Link to={`/contact-owner/${property.owner?.id}`}>
-                                                <button>Owner Details</button>
+                                            <Link to={`/contact-owner/${property.owner.id}`}>
+                                                <button className="view-btn">Owner Details</button>
                                             </Link>
                                         </div>
                                     </div>

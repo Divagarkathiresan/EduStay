@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -159,7 +160,7 @@ public class PropertyController {
     public ResponseEntity<?> getPropertyById(@PathVariable Long id) {
         Optional<Property> propertyOpt = propertyService.getPropertyById(id);
         if (propertyOpt.isPresent()) {
-            return ResponseEntity.ok(propertyOpt.get());
+            return new ResponseEntity<>(propertyOpt.get(), HttpStatus.OK);
         } else {
             return ResponseEntity.status(404).body("Property not found");
         }
