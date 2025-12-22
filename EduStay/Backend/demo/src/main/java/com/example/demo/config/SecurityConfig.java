@@ -33,15 +33,24 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // PUBLIC ROUTES
-                        .requestMatchers("/api/auth/users/register",
-                                         "/api/auth/users/login",
-                                         "/uploads/**").permitAll()
+    // PUBLIC
+        .requestMatchers(
+                "/api/auth/users/register",
+                "/api/auth/users/login",
+                "/uploads/**"
+        ).permitAll()
 
-                        // PRIVATE ROUTES
-                        .requestMatchers("/edustay/**","/edustay/**/**").authenticated()
-                        .anyRequest().authenticated()
-                );
+        // PROTECTED AUTH ROUTES
+        .requestMatchers(
+                "/api/auth/users/profile",
+                "/api/auth/users/profile/**"
+        ).authenticated()
+
+        // OTHER PRIVATE ROUTES
+        .requestMatchers("/edustay/**").authenticated()
+
+        .anyRequest().authenticated()
+        );
 
         // JWT FILTER
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
