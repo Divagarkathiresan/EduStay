@@ -1,0 +1,121 @@
+.owner-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.owner-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
+    border-radius: 15px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid #cce7ff;
+}
+
+.owner-card h1 {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.owner-info {
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: 600;
+    color: #1a365d;
+    font-size: 1rem;
+}
+
+.value {
+    color: #7f8c8d;
+    text-align: right;
+    font-size: 1rem;
+}
+
+.back-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.4);
+}
+
+.loading, .error, .no-data {
+    text-align: center;
+    padding: 4rem 2rem;
+    font-size: 1.2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.loading {
+    color: #1a365d;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+.no-data {
+    color: #2c5282;
+}
+
+@media (max-width: 768px) {
+    .owner-container {
+        padding: 2rem 1rem;
+    }
+    
+    .owner-card {
+        padding: 1.5rem;
+    }
+    
+    .owner-card h1 {
+        font-size: 2rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .value {
+        text-align: left;
+    }
+}

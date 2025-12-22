@@ -1,0 +1,169 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+}
+
+.login-page form {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
+  padding: 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #cce7ff;
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-page h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1a365d;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.login-page input {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 1.25rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.login-page input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.login-page input::placeholder {
+  color: #6c757d;
+}
+
+.login-page button {
+  width: 100%;
+  padding: 14px;
+  background: #3182ce;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.login-page button:hover {
+  background: #2c5282;
+  transform: translateY(-1px);
+}
+
+.login-page button:active {
+  transform: translateY(0);
+}
+
+.login-page p {
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.login-page p a {
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.login-page p a:hover {
+  color: #2c5282;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1rem;
+  }
+  
+  .login-page form {
+    padding: 2rem;
+  }
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Space for eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 37%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+}
+.toggle-password:hover {
+    color: #000;
+}
+
+/* ERROR ALERT BOX */
+.error-alert {
+    width: 100%;
+    background: #ffe5e5;
+    color: #b30000;
+    padding: 12px 14px;
+    margin-top: 1rem;
+    border: 1px solid #ffb3b3;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Small circular icon */
+.error-icon {
+    width: 22px;
+    height: 22px;
+    background: #ff4d4d;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
