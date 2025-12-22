@@ -1,6 +1,6 @@
 # EduStay - Student Accommodation Platform
 
-A comprehensive web application for students to find and book accommodation near their universities. Built using **React.js (Frontend)**, **Spring Boot (Backend)**, and **PostgreSQL (Database)**. Deployed on **Render** for production-grade hosting.
+A comprehensive web application for students to find and book accommodation near their universities. Built using **React.js (Frontend)**, **Spring Boot (Backend)**, and **MySQL (Database)**. Deployed on **Render** for production-grade hosting.
 
 ---
 
@@ -50,7 +50,7 @@ EduStay is a modern student accommodation platform that connects students with v
 * Spring Boot
 * Spring Security
 * Spring Data JPA
-* PostgreSQL
+* MySQL
 * JWT Authentication
 * Maven
 
@@ -62,7 +62,7 @@ EduStay is a modern student accommodation platform that connects students with v
 
 * Node.js (v14+)
 * Java 17+
-* PostgreSQL 15+
+* MySQL 8.0+
 * Maven 3.6+
 
 ---
@@ -72,21 +72,21 @@ EduStay is a modern student accommodation platform that connects students with v
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/Divagarkathiresan/EduStay.git
-   cd edustay/Backend/demo
+   git clone <your-repository-url>
+   cd EduStay-postgreSql/EduStay/Backend/demo
    ```
 
-2. **Configure PostgreSQL Database**
+2. **Configure MySQL Database**
    In `src/main/resources/application.properties`:
 
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/edustay
-   spring.datasource.username=your_pg_username
-   spring.datasource.password=your_pg_password
-   spring.datasource.driver-class-name=org.postgresql.Driver
+   spring.datasource.url=jdbc:mysql://localhost:3306/edustay
+   spring.datasource.username=your_mysql_username
+   spring.datasource.password=your_mysql_password
+   spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
    spring.jpa.hibernate.ddl-auto=update
-   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
    spring.jpa.show-sql=true
    ```
 
@@ -105,7 +105,7 @@ EduStay is a modern student accommodation platform that connects students with v
 1. **Navigate to the frontend**
 
    ```bash
-   cd ../Frontend/myapp
+   cd ../../../Frontend/myapp
    ```
 
 2. **Install dependencies**
@@ -127,21 +127,29 @@ EduStay is a modern student accommodation platform that connects students with v
 ## 📁 Project Structure
 
 ```
-EduStay/
-├── Backend/
-│   └── demo/
-│       ├── controller/     # REST controllers
-│       ├── entity/         # JPA entities
-│       ├── repository/     # Database access layer
-│       ├── service/        # Business logic
-│       ├── config/         # Security, CORS, JWT configs
-│       └── utils/          # JWT utility classes
-└── Frontend/
-    └── myapp/
-        ├── components/     # Reusable components
-        ├── pages/          # Main pages
-        ├── utils/          # API functions
-        └── App.js
+EduStay-postgreSql/
+├── EduStay/
+│   ├── Backend/
+│   │   └── demo/
+│   │       ├── src/main/java/com/example/demo/
+│   │       │   ├── controller/     # REST controllers
+│   │       │   ├── entity/         # JPA entities
+│   │       │   ├── repository/     # Database access layer
+│   │       │   ├── service/        # Business logic
+│   │       │   ├── config/         # Security, CORS, JWT configs
+│   │       │   └── utils/          # JWT utility classes
+│   │       ├── pom.xml
+│   │       └── Dockerfile
+│   └── Frontend/
+│       └── myapp/
+│           ├── src/
+│           │   ├── components/     # Reusable components
+│           │   ├── pages/          # Main pages
+│           │   ├── utils/          # API functions
+│           │   └── App.js
+│           ├── package.json
+│           └── public/
+└── README.md
 ```
 
 ---
@@ -235,7 +243,7 @@ Licensed under the **MIT License**.
 ## 👥 Team
 
 * Frontend: React.js, CSS
-* Backend: Spring Boot, PostgreSQL
+* Backend: Spring Boot, MySQL
 * UI/UX: Modern User-Centric Design
 
 ---
