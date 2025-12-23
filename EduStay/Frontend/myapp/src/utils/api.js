@@ -92,10 +92,10 @@ export const getPropertiesAsPerLocations = async (
 // GET ALL PROPERTIES
 // --------------------------
 export const getAllProperties = async () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     const res = await fetch(`${API_BASE_URL}/edustay/properties`, {
-        headers: { Authorization: `Bearer ${token}` },
+        // headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) throw new Error("Failed to fetch properties");

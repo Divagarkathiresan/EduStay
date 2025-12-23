@@ -6,6 +6,8 @@
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
 }
 
+/* ================= HEADER ================= */
+
 .property-header {
     background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
     color: #1a365d;
@@ -30,70 +32,10 @@
     line-height: 1.6;
 }
 
-.back-btn {
-    padding: 1rem 2rem;
-    width: max-content;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-    white-space: nowrap;
-}
-
-.back-btn:hover {
-    background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
-    box-shadow: 0 6px 25px rgba(52, 152, 219, 0.4);
-}
-
-.loading, .error {
-    text-align: center;
-    padding: 4rem 2rem;
-    font-size: 1.2rem;
-    color: #7f8c8d;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-}
-
-.error {
-    color: #e74c3c;
-}
-
-.no-properties {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
-    margin: 2rem;
-    border-radius: 8px;
-}
-
-.no-properties h3 {
-    color: #2c3e50;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-    font-weight: 600;
-}
-
-.no-properties p {
-    color: #7f8c8d;
-    line-height: 1.6;
-}
+/* ================= GRID ================= */
 
 .properties-section {
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-}
-
-.properties-section h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: #2c3e50;
-    font-weight: 600;
-    letter-spacing: -0.5px;
 }
 
 .container {
@@ -108,13 +50,18 @@
     justify-content: center;
 }
 
+/* ================= CARD ================= */
+
 .property-card {
+    display: flex;                 /* FIX */
+    flex-direction: column;        /* FIX */
+    width:450px;
     background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid #cce7ff;
     transition: all 0.2s;
-    overflow: hidden;
+    overflow: visible;             /* FIX */
 }
 
 .property-card:hover {
@@ -122,16 +69,17 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* ================= IMAGE ================= */
+
 .property-images {
     width: 100%;
-    height: 200px;
-    overflow: hidden;
+    height: 250px;
 }
 
 .image-gallery {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 250px;                 /* FIX */
 }
 
 .image-gallery img {
@@ -139,6 +87,7 @@
     height: 100%;
     object-fit: contain;
     object-position: center;
+    border-radius: 12px 12px 0 0;
 }
 
 .image-nav {
@@ -148,7 +97,7 @@
     transform: translateX(-50%);
     background: rgba(0,0,0,0.7);
     color: white;
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -162,12 +111,11 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-    padding: 0 5px;
 }
 
 .no-image-placeholder {
     width: 100%;
-    height: 200px;
+    height: 250px;
     background: linear-gradient(135deg, #f0f9ff 0%, #e6f3ff 100%);
     display: flex;
     align-items: center;
@@ -177,27 +125,32 @@
     border-bottom: 1px solid #cce7ff;
 }
 
+/* ================= CONTENT ================= */
+
 .property-content {
     padding: 2rem;
 }
 
+.property-content h2,
 .property-content h3 {
     color: #3498db;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .property-content p {
     margin: 0.5rem 0;
     color: #7f8c8d;
     line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .property-content p strong {
     color: #2c3e50;
 }
+
+/* ================= ACTIONS ================= */
 
 .property-actions {
     display: flex;
@@ -207,8 +160,9 @@
     border-top: 1px solid #e9ecef;
 }
 
-.view-btn, .contact-btn {
-    padding: 0.75rem 1rem;
+.view-btn,
+.contact-btn {
+    padding: 0.75rem 1.2rem;
     border-radius: 10px;
     cursor: pointer;
     font-size: 0.95rem;
@@ -220,6 +174,7 @@
 .view-btn {
     background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
     color: #ffffff;
+    height: 50px;
     border: none;
     box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
@@ -233,25 +188,25 @@
     background: transparent;
     color: #3498db;
     border: 2px solid #3498db;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .contact-btn:hover {
     background: #3498db;
     color: white;
-    box-shadow: 0 4px 20px rgba(52, 152, 219, 0.2);
     transform: translateY(-2px);
 }
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {
     .property-header h1 {
         font-size: 2rem;
     }
-    
+
     .properties-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .property-actions {
         flex-direction: column;
     }
